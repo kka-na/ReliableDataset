@@ -1,0 +1,55 @@
+2022-08-01 16:06:05,398 INFO    MainThread:9883 [internal.py:wandb_internal():90] W&B internal server running at pid: 9883, started at: 2022-08-01 16:06:05.398364
+2022-08-01 16:06:05,401 INFO    WriterThread:9883 [datastore.py:open_for_write():75] open: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/run-f9ffi9jz.wandb
+2022-08-01 16:06:05,405 DEBUG   SenderThread:9883 [sender.py:send():236] send: header
+2022-08-01 16:06:05,405 DEBUG   SenderThread:9883 [sender.py:send():236] send: run
+2022-08-01 16:06:05,686 DEBUG   HandlerThread:9883 [handler.py:handle_request():140] handle_request: check_version
+2022-08-01 16:06:05,688 INFO    SenderThread:9883 [dir_watcher.py:__init__():216] watching files in: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files
+2022-08-01 16:06:05,688 INFO    SenderThread:9883 [sender.py:_start_run_threads():815] run started: f9ffi9jz with start time 1659337564
+2022-08-01 16:06:05,688 DEBUG   SenderThread:9883 [sender.py:send():236] send: summary
+2022-08-01 16:06:05,689 INFO    SenderThread:9883 [sender.py:_save_file():952] saving file wandb-summary.json with policy end
+2022-08-01 16:06:05,689 DEBUG   SenderThread:9883 [sender.py:send_request():250] send_request: check_version
+2022-08-01 16:06:05,749 DEBUG   HandlerThread:9883 [handler.py:handle_request():140] handle_request: run_start
+2022-08-01 16:06:05,764 DEBUG   HandlerThread:9883 [meta.py:__init__():35] meta init
+2022-08-01 16:06:05,764 DEBUG   HandlerThread:9883 [meta.py:__init__():49] meta init done
+2022-08-01 16:06:05,764 DEBUG   HandlerThread:9883 [meta.py:probe():209] probe
+2022-08-01 16:06:05,771 DEBUG   HandlerThread:9883 [git.py:repo():29] git repository is invalid
+2022-08-01 16:06:05,771 DEBUG   HandlerThread:9883 [meta.py:_save_pip():53] save pip
+2022-08-01 16:06:05,772 DEBUG   HandlerThread:9883 [meta.py:_save_pip():67] save pip done
+2022-08-01 16:06:05,772 DEBUG   HandlerThread:9883 [meta.py:_save_conda():74] save conda
+2022-08-01 16:06:06,691 INFO    Thread-7  :9883 [dir_watcher.py:_on_file_created():269] file/dir created: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/conda-environment.yaml
+2022-08-01 16:06:06,691 INFO    Thread-7  :9883 [dir_watcher.py:_on_file_created():269] file/dir created: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/requirements.txt
+2022-08-01 16:06:06,691 INFO    Thread-7  :9883 [dir_watcher.py:_on_file_created():269] file/dir created: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/wandb-summary.json
+2022-08-01 16:06:06,828 DEBUG   HandlerThread:9883 [meta.py:_save_conda():84] save conda done
+2022-08-01 16:06:06,828 DEBUG   HandlerThread:9883 [meta.py:probe():247] probe done
+2022-08-01 16:06:06,872 DEBUG   SenderThread:9883 [sender.py:send():236] send: files
+2022-08-01 16:06:06,872 INFO    SenderThread:9883 [sender.py:_save_file():952] saving file wandb-metadata.json with policy now
+2022-08-01 16:06:06,879 DEBUG   HandlerThread:9883 [handler.py:handle_request():140] handle_request: stop_status
+2022-08-01 16:06:06,882 DEBUG   SenderThread:9883 [sender.py:send_request():250] send_request: stop_status
+2022-08-01 16:06:07,109 DEBUG   SenderThread:9883 [sender.py:send():236] send: telemetry
+2022-08-01 16:06:07,109 DEBUG   SenderThread:9883 [sender.py:send():236] send: telemetry
+2022-08-01 16:06:07,109 DEBUG   SenderThread:9883 [sender.py:send():236] send: telemetry
+2022-08-01 16:06:07,693 INFO    Thread-7  :9883 [dir_watcher.py:_on_file_modified():286] file/dir modified: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/conda-environment.yaml
+2022-08-01 16:06:07,693 INFO    Thread-7  :9883 [dir_watcher.py:_on_file_created():269] file/dir created: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/output.log
+2022-08-01 16:06:07,693 INFO    Thread-7  :9883 [dir_watcher.py:_on_file_created():269] file/dir created: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/wandb-metadata.json
+2022-08-01 16:06:07,706 INFO    Thread-11 :9883 [upload_job.py:push():138] Uploaded file /tmp/tmp4_gclorzwandb/9e8w4r1g-wandb-metadata.json
+2022-08-01 16:06:07,727 WARNING MainThread:9883 [internal.py:wandb_internal():153] Internal process interrupt: 1
+2022-08-01 16:06:14,734 WARNING MainThread:9883 [internal.py:is_dead():387] Internal process exiting, parent pid 9855 disappeared
+2022-08-01 16:06:14,735 ERROR   MainThread:9883 [internal.py:wandb_internal():149] Internal process shutdown.
+2022-08-01 16:06:14,892 INFO    WriterThread:9883 [datastore.py:close():279] close: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/run-f9ffi9jz.wandb
+2022-08-01 16:06:14,898 INFO    HandlerThread:9883 [handler.py:finish():806] shutting down handler
+2022-08-01 16:06:15,111 INFO    SenderThread:9883 [sender.py:finish():1114] shutting down sender
+2022-08-01 16:06:15,112 INFO    SenderThread:9883 [dir_watcher.py:finish():353] shutting down directory watcher
+2022-08-01 16:06:15,697 INFO    SenderThread:9883 [dir_watcher.py:finish():383] scan: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files
+2022-08-01 16:06:15,698 INFO    SenderThread:9883 [dir_watcher.py:finish():397] scan save: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/conda-environment.yaml conda-environment.yaml
+2022-08-01 16:06:15,698 INFO    SenderThread:9883 [dir_watcher.py:finish():397] scan save: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/wandb-summary.json wandb-summary.json
+2022-08-01 16:06:15,698 INFO    SenderThread:9883 [dir_watcher.py:finish():397] scan save: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/output.log output.log
+2022-08-01 16:06:15,705 INFO    SenderThread:9883 [dir_watcher.py:finish():397] scan save: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/requirements.txt requirements.txt
+2022-08-01 16:06:15,711 INFO    SenderThread:9883 [dir_watcher.py:finish():397] scan save: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/config.yaml config.yaml
+2022-08-01 16:06:15,717 INFO    SenderThread:9883 [dir_watcher.py:finish():397] scan save: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/wandb-metadata.json wandb-metadata.json
+2022-08-01 16:06:15,717 INFO    SenderThread:9883 [file_pusher.py:finish():171] shutting down file pusher
+2022-08-01 16:06:15,718 INFO    SenderThread:9883 [file_pusher.py:join():176] waiting for file pusher
+2022-08-01 16:06:16,465 INFO    Thread-13 :9883 [upload_job.py:push():138] Uploaded file /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/wandb-summary.json
+2022-08-01 16:06:16,466 INFO    Thread-12 :9883 [upload_job.py:push():138] Uploaded file /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/conda-environment.yaml
+2022-08-01 16:06:16,488 INFO    Thread-15 :9883 [upload_job.py:push():138] Uploaded file /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/config.yaml
+2022-08-01 16:06:16,530 INFO    Thread-14 :9883 [upload_job.py:push():138] Uploaded file /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_160604-f9ffi9jz/files/requirements.txt
+2022-08-01 16:06:18,535 INFO    MainThread:9883 [internal.py:handle_exit():80] Internal process exited

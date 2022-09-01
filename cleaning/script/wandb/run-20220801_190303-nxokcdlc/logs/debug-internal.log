@@ -1,0 +1,151 @@
+2022-08-01 19:03:03,878 INFO    MainThread:26101 [internal.py:wandb_internal():90] W&B internal server running at pid: 26101, started at: 2022-08-01 19:03:03.878268
+2022-08-01 19:03:03,881 INFO    WriterThread:26101 [datastore.py:open_for_write():75] open: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/run-nxokcdlc.wandb
+2022-08-01 19:03:03,884 DEBUG   SenderThread:26101 [sender.py:send():236] send: header
+2022-08-01 19:03:03,884 DEBUG   SenderThread:26101 [sender.py:send():236] send: run
+2022-08-01 19:03:04,169 INFO    SenderThread:26101 [dir_watcher.py:__init__():216] watching files in: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files
+2022-08-01 19:03:04,169 INFO    SenderThread:26101 [sender.py:_start_run_threads():815] run started: nxokcdlc with start time 1659348183
+2022-08-01 19:03:04,169 DEBUG   SenderThread:26101 [sender.py:send():236] send: summary
+2022-08-01 19:03:04,169 INFO    SenderThread:26101 [sender.py:_save_file():952] saving file wandb-summary.json with policy end
+2022-08-01 19:03:04,173 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: check_version
+2022-08-01 19:03:04,173 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: check_version
+2022-08-01 19:03:04,234 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: run_start
+2022-08-01 19:03:04,248 DEBUG   HandlerThread:26101 [meta.py:__init__():35] meta init
+2022-08-01 19:03:04,248 DEBUG   HandlerThread:26101 [meta.py:__init__():49] meta init done
+2022-08-01 19:03:04,248 DEBUG   HandlerThread:26101 [meta.py:probe():209] probe
+2022-08-01 19:03:04,255 DEBUG   HandlerThread:26101 [git.py:repo():29] git repository is invalid
+2022-08-01 19:03:04,255 DEBUG   HandlerThread:26101 [meta.py:_save_pip():53] save pip
+2022-08-01 19:03:04,256 DEBUG   HandlerThread:26101 [meta.py:_save_pip():67] save pip done
+2022-08-01 19:03:04,256 DEBUG   HandlerThread:26101 [meta.py:_save_conda():74] save conda
+2022-08-01 19:03:05,172 INFO    Thread-7  :26101 [dir_watcher.py:_on_file_created():269] file/dir created: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/requirements.txt
+2022-08-01 19:03:05,172 INFO    Thread-7  :26101 [dir_watcher.py:_on_file_created():269] file/dir created: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/conda-environment.yaml
+2022-08-01 19:03:05,172 INFO    Thread-7  :26101 [dir_watcher.py:_on_file_created():269] file/dir created: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/wandb-summary.json
+2022-08-01 19:03:05,309 DEBUG   HandlerThread:26101 [meta.py:_save_conda():84] save conda done
+2022-08-01 19:03:05,309 DEBUG   HandlerThread:26101 [meta.py:probe():247] probe done
+2022-08-01 19:03:05,350 DEBUG   SenderThread:26101 [sender.py:send():236] send: files
+2022-08-01 19:03:05,351 INFO    SenderThread:26101 [sender.py:_save_file():952] saving file wandb-metadata.json with policy now
+2022-08-01 19:03:05,361 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: stop_status
+2022-08-01 19:03:05,361 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: stop_status
+2022-08-01 19:03:05,614 DEBUG   SenderThread:26101 [sender.py:send():236] send: telemetry
+2022-08-01 19:03:06,174 INFO    Thread-11 :26101 [upload_job.py:push():138] Uploaded file /tmp/tmp2s8pjtvtwandb/2r6d6hgh-wandb-metadata.json
+2022-08-01 19:03:06,177 INFO    Thread-7  :26101 [dir_watcher.py:_on_file_modified():286] file/dir modified: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/conda-environment.yaml
+2022-08-01 19:03:06,178 INFO    Thread-7  :26101 [dir_watcher.py:_on_file_created():269] file/dir created: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/output.log
+2022-08-01 19:03:06,179 INFO    Thread-7  :26101 [dir_watcher.py:_on_file_created():269] file/dir created: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/wandb-metadata.json
+2022-08-01 19:03:06,189 DEBUG   SenderThread:26101 [sender.py:send():236] send: telemetry
+2022-08-01 19:03:06,189 DEBUG   SenderThread:26101 [sender.py:send():236] send: telemetry
+2022-08-01 19:03:06,189 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: poll_exit
+2022-08-01 19:03:06,190 DEBUG   SenderThread:26101 [sender.py:send():236] send: exit
+2022-08-01 19:03:06,190 INFO    SenderThread:26101 [sender.py:send_exit():372] handling exit code: 1
+2022-08-01 19:03:06,190 INFO    SenderThread:26101 [sender.py:send_exit():374] handling runtime: 1
+2022-08-01 19:03:06,190 INFO    SenderThread:26101 [sender.py:_save_file():952] saving file wandb-summary.json with policy end
+2022-08-01 19:03:06,191 INFO    SenderThread:26101 [sender.py:send_exit():380] send defer
+2022-08-01 19:03:06,191 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: poll_exit
+2022-08-01 19:03:06,192 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: defer
+2022-08-01 19:03:06,192 INFO    HandlerThread:26101 [handler.py:handle_request_defer():163] handle defer: 0
+2022-08-01 19:03:06,192 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: defer
+2022-08-01 19:03:06,192 INFO    SenderThread:26101 [sender.py:send_request_defer():389] handle sender defer: 0
+2022-08-01 19:03:06,192 INFO    SenderThread:26101 [sender.py:transition_state():393] send defer: 1
+2022-08-01 19:03:06,193 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: defer
+2022-08-01 19:03:06,193 INFO    HandlerThread:26101 [handler.py:handle_request_defer():163] handle defer: 1
+2022-08-01 19:03:06,286 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: defer
+2022-08-01 19:03:06,287 INFO    SenderThread:26101 [sender.py:send_request_defer():389] handle sender defer: 1
+2022-08-01 19:03:06,287 INFO    SenderThread:26101 [sender.py:transition_state():393] send defer: 2
+2022-08-01 19:03:06,287 DEBUG   SenderThread:26101 [sender.py:send():236] send: stats
+2022-08-01 19:03:06,288 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: defer
+2022-08-01 19:03:06,288 INFO    HandlerThread:26101 [handler.py:handle_request_defer():163] handle defer: 2
+2022-08-01 19:03:06,289 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: defer
+2022-08-01 19:03:06,289 INFO    SenderThread:26101 [sender.py:send_request_defer():389] handle sender defer: 2
+2022-08-01 19:03:06,289 INFO    SenderThread:26101 [sender.py:transition_state():393] send defer: 3
+2022-08-01 19:03:06,289 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: defer
+2022-08-01 19:03:06,289 INFO    HandlerThread:26101 [handler.py:handle_request_defer():163] handle defer: 3
+2022-08-01 19:03:06,289 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: defer
+2022-08-01 19:03:06,290 INFO    SenderThread:26101 [sender.py:send_request_defer():389] handle sender defer: 3
+2022-08-01 19:03:06,290 INFO    SenderThread:26101 [sender.py:transition_state():393] send defer: 4
+2022-08-01 19:03:06,290 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: defer
+2022-08-01 19:03:06,290 INFO    HandlerThread:26101 [handler.py:handle_request_defer():163] handle defer: 4
+2022-08-01 19:03:06,290 DEBUG   SenderThread:26101 [sender.py:send():236] send: summary
+2022-08-01 19:03:06,291 INFO    SenderThread:26101 [sender.py:_save_file():952] saving file wandb-summary.json with policy end
+2022-08-01 19:03:06,291 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: defer
+2022-08-01 19:03:06,291 INFO    SenderThread:26101 [sender.py:send_request_defer():389] handle sender defer: 4
+2022-08-01 19:03:06,291 INFO    SenderThread:26101 [sender.py:transition_state():393] send defer: 5
+2022-08-01 19:03:06,292 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: defer
+2022-08-01 19:03:06,292 INFO    HandlerThread:26101 [handler.py:handle_request_defer():163] handle defer: 5
+2022-08-01 19:03:06,292 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: defer
+2022-08-01 19:03:06,292 INFO    SenderThread:26101 [sender.py:send_request_defer():389] handle sender defer: 5
+2022-08-01 19:03:06,298 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: poll_exit
+2022-08-01 19:03:06,588 INFO    SenderThread:26101 [sender.py:transition_state():393] send defer: 6
+2022-08-01 19:03:06,588 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: poll_exit
+2022-08-01 19:03:06,589 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: defer
+2022-08-01 19:03:06,589 INFO    HandlerThread:26101 [handler.py:handle_request_defer():163] handle defer: 6
+2022-08-01 19:03:06,589 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: defer
+2022-08-01 19:03:06,589 INFO    SenderThread:26101 [sender.py:send_request_defer():389] handle sender defer: 6
+2022-08-01 19:03:06,589 INFO    SenderThread:26101 [dir_watcher.py:finish():353] shutting down directory watcher
+2022-08-01 19:03:06,690 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: poll_exit
+2022-08-01 19:03:07,178 INFO    Thread-7  :26101 [dir_watcher.py:_on_file_modified():286] file/dir modified: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/config.yaml
+2022-08-01 19:03:07,178 INFO    SenderThread:26101 [dir_watcher.py:_on_file_modified():286] file/dir modified: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/wandb-summary.json
+2022-08-01 19:03:07,179 INFO    SenderThread:26101 [dir_watcher.py:finish():383] scan: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files
+2022-08-01 19:03:07,179 INFO    SenderThread:26101 [dir_watcher.py:finish():397] scan save: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/conda-environment.yaml conda-environment.yaml
+2022-08-01 19:03:07,179 INFO    SenderThread:26101 [dir_watcher.py:finish():397] scan save: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/wandb-summary.json wandb-summary.json
+2022-08-01 19:03:07,180 INFO    SenderThread:26101 [dir_watcher.py:finish():397] scan save: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/output.log output.log
+2022-08-01 19:03:07,186 INFO    SenderThread:26101 [dir_watcher.py:finish():397] scan save: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/requirements.txt requirements.txt
+2022-08-01 19:03:07,192 INFO    SenderThread:26101 [dir_watcher.py:finish():397] scan save: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/config.yaml config.yaml
+2022-08-01 19:03:07,192 INFO    SenderThread:26101 [dir_watcher.py:finish():397] scan save: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/wandb-metadata.json wandb-metadata.json
+2022-08-01 19:03:07,192 INFO    SenderThread:26101 [sender.py:transition_state():393] send defer: 7
+2022-08-01 19:03:07,203 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: poll_exit
+2022-08-01 19:03:07,204 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: defer
+2022-08-01 19:03:07,204 INFO    HandlerThread:26101 [handler.py:handle_request_defer():163] handle defer: 7
+2022-08-01 19:03:07,206 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: defer
+2022-08-01 19:03:07,206 INFO    SenderThread:26101 [sender.py:send_request_defer():389] handle sender defer: 7
+2022-08-01 19:03:07,206 INFO    SenderThread:26101 [file_pusher.py:finish():171] shutting down file pusher
+2022-08-01 19:03:07,305 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: poll_exit
+2022-08-01 19:03:07,306 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: poll_exit
+2022-08-01 19:03:07,408 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: poll_exit
+2022-08-01 19:03:07,408 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: poll_exit
+2022-08-01 19:03:07,510 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: poll_exit
+2022-08-01 19:03:07,511 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: poll_exit
+2022-08-01 19:03:07,613 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: poll_exit
+2022-08-01 19:03:07,613 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: poll_exit
+2022-08-01 19:03:07,715 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: poll_exit
+2022-08-01 19:03:07,716 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: poll_exit
+2022-08-01 19:03:07,818 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: poll_exit
+2022-08-01 19:03:07,819 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: poll_exit
+2022-08-01 19:03:07,910 INFO    Thread-13 :26101 [upload_job.py:push():138] Uploaded file /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/wandb-summary.json
+2022-08-01 19:03:07,921 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: poll_exit
+2022-08-01 19:03:07,921 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: poll_exit
+2022-08-01 19:03:07,949 INFO    Thread-12 :26101 [upload_job.py:push():138] Uploaded file /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/conda-environment.yaml
+2022-08-01 19:03:07,973 INFO    Thread-14 :26101 [upload_job.py:push():138] Uploaded file /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/requirements.txt
+2022-08-01 19:03:07,980 INFO    Thread-15 :26101 [upload_job.py:push():138] Uploaded file /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/files/config.yaml
+2022-08-01 19:03:08,023 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: poll_exit
+2022-08-01 19:03:08,023 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: poll_exit
+2022-08-01 19:03:08,126 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: poll_exit
+2022-08-01 19:03:08,126 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: poll_exit
+2022-08-01 19:03:08,181 INFO    Thread-6  :26101 [sender.py:transition_state():393] send defer: 8
+2022-08-01 19:03:08,182 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: defer
+2022-08-01 19:03:08,182 INFO    HandlerThread:26101 [handler.py:handle_request_defer():163] handle defer: 8
+2022-08-01 19:03:08,182 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: defer
+2022-08-01 19:03:08,182 INFO    SenderThread:26101 [sender.py:send_request_defer():389] handle sender defer: 8
+2022-08-01 19:03:08,228 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: poll_exit
+2022-08-01 19:03:08,856 INFO    SenderThread:26101 [sender.py:transition_state():393] send defer: 9
+2022-08-01 19:03:08,856 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: poll_exit
+2022-08-01 19:03:08,857 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: defer
+2022-08-01 19:03:08,857 INFO    HandlerThread:26101 [handler.py:handle_request_defer():163] handle defer: 9
+2022-08-01 19:03:08,857 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: defer
+2022-08-01 19:03:08,857 INFO    SenderThread:26101 [sender.py:send_request_defer():389] handle sender defer: 9
+2022-08-01 19:03:08,858 INFO    SenderThread:26101 [sender.py:transition_state():393] send defer: 10
+2022-08-01 19:03:08,858 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: defer
+2022-08-01 19:03:08,859 DEBUG   SenderThread:26101 [sender.py:send():236] send: final
+2022-08-01 19:03:08,859 INFO    HandlerThread:26101 [handler.py:handle_request_defer():163] handle defer: 10
+2022-08-01 19:03:08,859 DEBUG   SenderThread:26101 [sender.py:send():236] send: footer
+2022-08-01 19:03:08,859 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: defer
+2022-08-01 19:03:08,859 INFO    SenderThread:26101 [sender.py:send_request_defer():389] handle sender defer: 10
+2022-08-01 19:03:08,959 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: poll_exit
+2022-08-01 19:03:08,959 DEBUG   SenderThread:26101 [sender.py:send_request():250] send_request: poll_exit
+2022-08-01 19:03:08,959 INFO    SenderThread:26101 [file_pusher.py:join():176] waiting for file pusher
+2022-08-01 19:03:09,495 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: sampled_history
+2022-08-01 19:03:09,496 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: get_summary
+2022-08-01 19:03:09,497 DEBUG   HandlerThread:26101 [handler.py:handle_request():140] handle_request: shutdown
+2022-08-01 19:03:09,497 INFO    HandlerThread:26101 [handler.py:finish():806] shutting down handler
+2022-08-01 19:03:09,859 INFO    WriterThread:26101 [datastore.py:close():279] close: /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220801_190303-nxokcdlc/run-nxokcdlc.wandb
+2022-08-01 19:03:10,393 INFO    SenderThread:26101 [sender.py:finish():1114] shutting down sender
+2022-08-01 19:03:10,393 INFO    SenderThread:26101 [file_pusher.py:finish():171] shutting down file pusher
+2022-08-01 19:03:10,393 INFO    SenderThread:26101 [file_pusher.py:join():176] waiting for file pusher
+2022-08-01 19:03:10,396 INFO    MainThread:26101 [internal.py:handle_exit():80] Internal process exited

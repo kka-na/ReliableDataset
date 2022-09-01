@@ -1,0 +1,12 @@
+wandb_version: 1
+
+BATCH_SIZE_PER_IMAGE:
+  value: 256
+IMS_PER_BATCH:
+  value: 8
+iteration:
+  value: 300
+learning_rate:
+  value: 0.0005437069338201459
+model:
+  value: COCO-Detection/faster_rcnn_R_101_C4_3x.yaml

@@ -1,0 +1,22 @@
+{
+    "os": "Linux-5.15.0-41-generic-x86_64-with-glibc2.17",
+    "python": "3.8.13",
+    "heartbeatAt": "2022-08-04T03:38:28.882418",
+    "startedAt": "2022-08-04T03:38:27.533754",
+    "docker": null,
+    "gpu": "NVIDIA GeForce GTX 1080 Ti",
+    "gpu_count": 3,
+    "cpu_count": 20,
+    "cuda": "11.0.228",
+    "args": [
+        "--num-gpus",
+        "2",
+        "--config-file",
+        "../configs/iter1_c.yaml"
+    ],
+    "state": "running",
+    "program": "/home/kana/Documents/Training/Reliable_Dataset/cleaning/src/train_net.py",
+    "host": "server9",
+    "username": "kana",
+    "executable": "/home/kana/yes/envs/detectron2/bin/python"
+}

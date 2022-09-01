@@ -1,0 +1,12 @@
+wandb_version: 1
+
+BATCH_SIZE_PER_IMAGE:
+  value: 32
+IMS_PER_BATCH:
+  value: 2
+iteration:
+  value: 300
+learning_rate:
+  value: 0.0009639012218814738
+model:
+  value: COCO-Detection/rpn_R_50_FPN_1x.yaml

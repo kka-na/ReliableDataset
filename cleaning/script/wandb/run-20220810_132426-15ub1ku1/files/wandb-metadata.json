@@ -1,0 +1,20 @@
+{
+    "os": "Linux-5.15.0-43-generic-x86_64-with-glibc2.17",
+    "python": "3.8.13",
+    "heartbeatAt": "2022-08-10T04:24:27.526619",
+    "startedAt": "2022-08-10T04:24:26.551394",
+    "docker": null,
+    "gpu": "NVIDIA GeForce GTX 1080 Ti",
+    "gpu_count": 3,
+    "cpu_count": 20,
+    "cuda": "11.0.228",
+    "args": [
+        "1",
+        "b"
+    ],
+    "state": "running",
+    "program": "../src/hyp_tuning.py",
+    "host": "server9",
+    "username": "kana",
+    "executable": "/home/kana/yes/envs/detectron2/bin/python"
+}

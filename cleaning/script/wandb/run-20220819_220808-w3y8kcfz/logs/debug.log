@@ -1,0 +1,283 @@
+2022-08-19 22:08:08,790 INFO    Thread-51 :3015798 [wandb_setup.py:_flush():76] Configure stats pid to 3015798
+2022-08-19 22:08:08,790 INFO    Thread-51 :3015798 [wandb_setup.py:_flush():76] Loading settings from /home/kana/.config/wandb/settings
+2022-08-19 22:08:08,790 INFO    Thread-51 :3015798 [wandb_setup.py:_flush():76] Loading settings from wandb/settings
+2022-08-19 22:08:08,790 INFO    Thread-51 :3015798 [wandb_setup.py:_flush():76] Loading settings from environment variables: {'project': 'noisy_label_cleaning_eval', 'entity': 'kka-na', 'root_dir': '/home/kana/Documents/Training/Reliable_Dataset/cleaning/script', 'run_id': 'w3y8kcfz', 'sweep_param_path': '/home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/sweep-vr0giyb5/config-w3y8kcfz.yaml', 'sweep_id': 'vr0giyb5'}
+2022-08-19 22:08:08,790 WARNING Thread-51 :3015798 [wandb_setup.py:_flush():76] Could not save program above cwd: ../src/hyp_tuning.py
+2022-08-19 22:08:08,790 INFO    Thread-51 :3015798 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': None, 'program': '../src/hyp_tuning.py'}
+2022-08-19 22:08:08,791 INFO    Thread-51 :3015798 [wandb_init.py:_log_setup():461] Logging user logs to /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220819_220808-w3y8kcfz/logs/debug.log
+2022-08-19 22:08:08,791 INFO    Thread-51 :3015798 [wandb_init.py:_log_setup():462] Logging internal logs to /home/kana/Documents/Training/Reliable_Dataset/cleaning/script/wandb/run-20220819_220808-w3y8kcfz/logs/debug-internal.log
+2022-08-19 22:08:08,794 INFO    Thread-51 :3015798 [wandb_init.py:init():495] calling init triggers
+2022-08-19 22:08:08,794 INFO    Thread-51 :3015798 [wandb_init.py:init():498] wandb.init called with sweep_config: {'BATCH_SIZE_PER_IMAGE': 64, 'IMS_PER_BATCH': 8, 'iteration': 1500, 'learning_rate': 0.00022439065196111865, 'model': 'COCO-Detection/rpn_R_50_FPN_1x.yaml'}
+config: {}
+2022-08-19 22:08:08,797 INFO    Thread-51 :3015798 [wandb_init.py:init():548] starting backend
+2022-08-19 22:08:08,797 INFO    Thread-51 :3015798 [backend.py:_multiprocessing_setup():97] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2022-08-19 22:08:08,806 INFO    Thread-51 :3015798 [backend.py:ensure_launched():217] starting backend process...
+2022-08-19 22:08:08,854 INFO    Thread-51 :3015798 [backend.py:ensure_launched():222] started backend process with pid: 3062749
+2022-08-19 22:08:08,855 INFO    Thread-51 :3015798 [wandb_init.py:init():558] backend started and connected
+2022-08-19 22:08:08,868 INFO    Thread-51 :3015798 [wandb_run.py:_config_callback():1131] config_cb None None {'BATCH_SIZE_PER_IMAGE': 64, 'IMS_PER_BATCH': 8, 'iteration': 1500, 'learning_rate': 0.00022439065196111865, 'model': 'COCO-Detection/rpn_R_50_FPN_1x.yaml'}
+2022-08-19 22:08:08,873 INFO    Thread-51 :3015798 [wandb_init.py:init():634] updated telemetry
+2022-08-19 22:08:08,874 INFO    Thread-51 :3015798 [wandb_init.py:init():665] communicating run to backend with 30 second timeout
+2022-08-19 22:08:09,653 INFO    Thread-51 :3015798 [wandb_run.py:_on_init():1919] communicating current version
+2022-08-19 22:08:09,699 INFO    Thread-51 :3015798 [wandb_run.py:_on_init():1923] got version response upgrade_message: "wandb version 0.13.1 is available!  To upgrade, please run:\n $ pip install wandb --upgrade"
+
+2022-08-19 22:08:09,699 INFO    Thread-51 :3015798 [wandb_init.py:init():700] starting run threads in backend
+2022-08-19 22:08:10,762 INFO    Thread-51 :3015798 [wandb_run.py:_console_start():1893] atexit reg
+2022-08-19 22:08:10,766 INFO    Thread-51 :3015798 [wandb_run.py:_redirect():1766] redirect: SettingsConsole.REDIRECT
+2022-08-19 22:08:10,766 INFO    Thread-51 :3015798 [wandb_run.py:_redirect():1771] Redirecting console.
+2022-08-19 22:08:10,766 ERROR   Thread-51 :3015798 [wandb_run.py:_redirect():1830] Failed to redirect.
+Traceback (most recent call last):
+  File "/home/kana/yes/envs/detectron2/lib/python3.8/site-packages/wandb/sdk/wandb_run.py", line 1823, in _redirect
+    out_redir.install()
+  File "/home/kana/yes/envs/detectron2/lib/python3.8/site-packages/wandb/sdk/lib/redirect.py", line 702, in install
+    _WSCH.add_fd(self._pipe_read_fd)
+  File "/home/kana/yes/envs/detectron2/lib/python3.8/site-packages/wandb/sdk/lib/redirect.py", line 652, in add_fd
+    self._register()
+  File "/home/kana/yes/envs/detectron2/lib/python3.8/site-packages/wandb/sdk/lib/redirect.py", line 637, in _register
+    old_handler = signal.signal(signal.SIGWINCH, lambda *_: None)
+  File "/home/kana/yes/envs/detectron2/lib/python3.8/signal.py", line 47, in signal
+    handler = _signal.signal(_enum_to_int(signalnum), _enum_to_int(handler))
+ValueError: signal only works in main thread
+2022-08-19 22:08:10,767 INFO    Thread-51 :3015798 [wandb_init.py:init():732] run started, returning control to user process
+2022-08-19 22:34:16,284 INFO    Thread-51 :3015798 [wandb_run.py:_finish():1680] finishing run kka-na/noisy_label_cleaning_eval/w3y8kcfz
+2022-08-19 22:34:16,285 INFO    Thread-51 :3015798 [wandb_run.py:_atexit_cleanup():1862] got exitcode: 0
+2022-08-19 22:34:16,289 INFO    Thread-51 :3015798 [wandb_run.py:_restore():1834] restore
+2022-08-19 22:34:16,293 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 1
+}
+pusher_stats {
+  uploaded_bytes: 530
+  total_bytes: 530
+}
+
+2022-08-19 22:34:16,409 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 1
+}
+pusher_stats {
+  uploaded_bytes: 530
+  total_bytes: 530
+}
+
+2022-08-19 22:34:16,715 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 1
+}
+pusher_stats {
+  uploaded_bytes: 530
+  total_bytes: 530
+}
+
+2022-08-19 22:34:17,507 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 530
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:17,610 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 530
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:17,712 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 530
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:17,822 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 530
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:17,924 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 530
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:18,026 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 3774
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:18,129 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 3774
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:18,231 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 3774
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:18,334 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 3774
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:18,437 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 3774
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:18,539 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 3774
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:18,641 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 3774
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:18,744 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 3774
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:18,847 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 3774
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:18,949 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 3774
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:19,052 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 3774
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:19,158 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 3774
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:19,261 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 3774
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:19,363 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 6041
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:19,465 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 6041
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:19,568 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 6041
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:19,670 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 6041
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:19,773 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 6041
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:19,875 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 6041
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:20,553 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 6041
+  total_bytes: 6041
+}
+
+2022-08-19 22:34:21,085 INFO    Thread-51 :3015798 [wandb_run.py:_on_finish():1991] got exit ret: done: true
+exit_result {
+}
+file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 6041
+  total_bytes: 6041
+}
+local_info {
+}
+
+2022-08-19 22:34:22,222 INFO    Thread-51 :3015798 [wandb_run.py:_footer_history_summary_info():3099] rendering history
+2022-08-19 22:34:22,222 INFO    Thread-51 :3015798 [wandb_run.py:_footer_history_summary_info():3131] rendering summary
+2022-08-19 22:34:22,227 INFO    Thread-51 :3015798 [wandb_run.py:_footer_sync_info():3055] logging synced files
