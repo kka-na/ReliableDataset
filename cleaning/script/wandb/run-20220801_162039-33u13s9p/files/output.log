@@ -1,2 +1,0 @@
-
-{'method': 'random', 'metric': {'name': 'total_loss', 'goal': 'minimize'}, 'parameters': {'learning_rate': {'distribution': 'uniform', 'min': 0, 'max': 0.001}, 'IMS_PER_BATCH': {'values': [2, 4, 8]}, 'iteration': {'values': [300, 1000, 1500, 5000]}, 'BATCH_SIZE_PER_IMAGE': {'values': [32, 64, 128, 256]}, 'model': {'value': 'COCO-Detection/faster_rcnn_R_101_C4_3x.yaml'}}}
