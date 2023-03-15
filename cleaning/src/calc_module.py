@@ -1,14 +1,10 @@
 import os 
 from operator import itemgetter
 
-width = 1920
-height = 1080
-
 def get_confs(net_bboxes, checked_net):
     confs = []
-    for i in range(len(net_bboxes)):
-        if i in checked_net:
-            confs.append(net_bboxes[i]['conf'])
+    for i in checked_net:
+        confs.append(net_bboxes[i]['conf'])
     return confs
 
 def get_classes(gt_bboxes, checked_gt, ious):
@@ -56,7 +52,7 @@ def calc_iou(gt_bbox, net_bbox):
     return iou
 
 
-def calc_ious(gt_bboxes, net_bboxes):
+def calc_ious(iou_thres, gt_bboxes, net_bboxes):
     ious = []
     checked_gt = []
     checked_net = []
@@ -68,24 +64,30 @@ def calc_ious(gt_bboxes, net_bboxes):
         each_ious = sorted(each_ious.items(), key=lambda x: x[1], reverse=True)
         iou = 0.0
         for k in range(len(each_ious)):
-            if each_ious[k][0] in checked_gt:
-                continue
-            else:
-                iou = each_ious[k][1]
+            # if each_ious[k][0] in checked_gt:
+            #     continue
+            # else:
+            #     iou = each_ious[k][1]
+            #     checked_gt.append(each_ious[k][0])
+            #     ious.append({int(net_bboxes[i]['cls']): float(iou)})
+            #     checked_net.append(i)
+            #     break
+            
+            iou = each_ious[k][1]
+            if iou > iou_thres:
+                checked_net.append(i)
                 checked_gt.append(each_ious[k][0])
                 ious.append({int(net_bboxes[i]['cls']): float(iou)})
-                checked_net.append(i)
-                break
     return ious, checked_gt, checked_net
 
-def calc_boxes(_object):
+def calc_boxes(_object, width, height):
     lx = (float(_object[0]) - float(_object[2]) / 2) * width
     ly = (float(_object[1]) - float(_object[3]) / 2) * height
     rx = (float(_object[0]) + float(_object[2]) / 2) * width
     ry = (float(_object[1]) + float(_object[3]) / 2) * height
     return [float(_object[2]) * width, float(_object[3]) * height, lx, ly, rx, ry]
 
-def get_label_list(_type, file):
+def get_label_list(_type, file, width, height):
     bboxes = []
     if os.path.isfile(file):
         fr = open(file)
@@ -94,11 +96,11 @@ def get_label_list(_type, file):
             val = line.split()
             if _type == 0:
                 conf = 1.0
-                calc_box = calc_boxes(val[1:])
+                calc_box = calc_boxes(val[1:], width, height)
                 _center = [float(val[1]) * width, float(val[2]) * height]
             else:
                 conf = float(val[1])
-                calc_box = calc_boxes(val[2:])
+                calc_box = calc_boxes(val[2:], width, height)
                 _center = [float(val[2]) * width, float(val[3]) * height]
             bbox = {'cls': val[0], 'conf': conf, 'size': calc_box[0:2], 'bbox': calc_box[2:], 'center': _center}
             bboxes.append(bbox)
@@ -106,19 +108,28 @@ def get_label_list(_type, file):
     bboxes = sorted(bboxes, key=itemgetter('conf'), reverse=True)
     return bboxes
 
-def calc_each_score(gt_path, inf_path):
+def calc_each_score(iou_thres, gt_path, inf_path, report):
     gt_bboxes = get_label_list(0, gt_path)
     net_bboxes = get_label_list(1, inf_path)
-    ious, checked_gt, checked_net = calc_ious(gt_bboxes, net_bboxes)
+    ious, checked_gt, checked_net = calc_ious(iou_thres, gt_bboxes, net_bboxes)
     confs = get_confs(net_bboxes, checked_net)
     classes = get_classes(gt_bboxes, checked_gt, ious)
     conf = 0
     correct_cnt = 0
-    score = 0 
+    score_sum = 0 
+    if report:
+        print("GT   INF  Conf  IoU Score")
     for i in range(len(confs)):
-        if classes[i]:
-            score += confs[i]+float(list(ious[i].values())[0])
-            correct_cnt += 1
+        conf = confs[i] if classes[i] else 0
+        score = conf*float(list(ious[i].values())[0])
+        score_sum += score
+        correct_cnt += 1
+        if report:
+            print(checked_gt[i], gt_bboxes[checked_gt[i]]['cls'], checked_net[i],net_bboxes[checked_net[i]]['cls'], round(confs[i],2), round(list(ious[i].values())[0],2), round(score,2))
+    return score_sum/(correct_cnt+1e-10)
 
-    return score/(correct_cnt+1e-10)
+def calc_score_threshold(gt_path, inf_path, width, height):
+    return calc_each_score(0.0, gt_path, inf_path, False, width, height)
 
+def calc_score(report, gt_path, inf_path,width, height):
+    return calc_each_score(0.3, gt_path, inf_path, report,width, height)

@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 #chmod +x train_set.sh
-#./train_set.sh iter_num sub_set batch_size_per_image img_per_batch iteration learning_rate
+#./train_set.sh data_base_path iter_num
 
-python ../src/train_set.py $1 $2 $3 $4 $5 $6 $7
+python ../src/train_set.py $1 $2 a &
+python ../src/train_set.py $1 $2 b &
+python ../src/train_set.py $1 $2 c &
+python ../src/train_set.py $1 $2 eval 

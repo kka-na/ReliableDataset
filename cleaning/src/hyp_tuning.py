@@ -67,17 +67,17 @@ sweep_config['metric'] = metric
 parameters_dict = {
     'learning_rate': {  
         'distribution': 'uniform',  #  uniform distribution 즉 균둥분포로 lr을 뽑겠다는 의미 
-        'min' : 0,
-        'max' : 0.001
+        'min' : 0.01,
+        'max' : 0.1
     },
     'IMS_PER_BATCH': {
-        'values': [2, 4, 8]
+        'values': [8, 16, 32]
     },
     'iteration': {
-        'values': [300, 1000, 1500, 5000]
+        'values': [5000]
     },
     'BATCH_SIZE_PER_IMAGE' : {
-        'values': [32, 64, 128, 256]
+        'values': [128, 256, 512]
     },       
     'model': {
         'value' : model_name

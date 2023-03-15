@@ -2,21 +2,12 @@ import logging
 import os
 from collections import OrderedDict
 
-import detectron2.utils.comm as comm
-from detectron2.checkpoint import DetectionCheckpointer
 from detectron2.config import get_cfg
 from detectron2.data import MetadataCatalog
 from detectron2.engine import DefaultTrainer, default_argument_parser, default_setup, hooks, launch
 from detectron2.evaluation import (
-    CityscapesInstanceEvaluator,
-    CityscapesSemSegEvaluator,
     COCOEvaluator,
-    COCOPanopticEvaluator,
     DatasetEvaluators,
-    LVISEvaluator,
-    PascalVOCDetectionEvaluator,
-    SemSegEvaluator,
-    verify_results,
 )
 from detectron2.modeling import GeneralizedRCNNWithTTA
 from detectron2.data.datasets import register_coco_instances
@@ -32,26 +23,9 @@ def build_evaluator(cfg, dataset_name, output_folder=None):
         output_folder = os.path.join(cfg.OUTPUT_DIR, "inference")
     evaluator_list = []
     evaluator_type = MetadataCatalog.get(dataset_name).evaluator_type
-    if evaluator_type in ["sem_seg", "coco_panoptic_seg"]:
-        evaluator_list.append(
-            SemSegEvaluator(
-                dataset_name,
-                distributed=True,
-                output_dir=output_folder,
-            )
-        )
+    
     if evaluator_type in ["coco", "coco_panoptic_seg"]:
-        evaluator_list.append(COCOEvaluator(dataset_name, output_dir=output_folder))
-    if evaluator_type == "coco_panoptic_seg":
-        evaluator_list.append(COCOPanopticEvaluator(dataset_name, output_folder))
-    if evaluator_type == "cityscapes_instance":
-        return CityscapesInstanceEvaluator(dataset_name)
-    if evaluator_type == "cityscapes_sem_seg":
-        return CityscapesSemSegEvaluator(dataset_name)
-    elif evaluator_type == "pascal_voc":
-        return PascalVOCDetectionEvaluator(dataset_name)
-    elif evaluator_type == "lvis":
-        return LVISEvaluator(dataset_name, output_dir=output_folder)
+        evaluator_list.append(COCOEvaluator(dataset_name, output_dir=output_folder))     
     if len(evaluator_list) == 0:
         raise NotImplementedError(
             "no Evaluator for the dataset {} with the type {}".format(dataset_name, evaluator_type)
@@ -70,8 +44,6 @@ class Trainer(DefaultTrainer):
     @classmethod
     def test_with_TTA(cls, cfg, model):
         logger = logging.getLogger("detectron2.trainer")
-        # In the end of training, run an evaluation with TTA
-        # Only support some R-CNN models.
         logger.info("Running inference with test-time augmentation ...")
         model = GeneralizedRCNNWithTTA(cfg, model)
         evaluators = [
@@ -95,36 +67,25 @@ def setup(args):
 
 
 def main(args):
-    iter_num = 2
-    subset = "eval"
+    cfg = setup(args)
+    os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
+    
+    output_dir = str(cfg.OUTPUT_DIR).split('/')
+    iter_num = output_dir[2][4:]
+    subset=output_dir[3]
 
-    base_path = "/home/kana/Documents/Dataset/TS/2DOD/organized/cleaning/"
-
-    train_path = base_path+"iter{}/{}/train/".format(iter_num, subset)
-    val_path = base_path+"iter1/{}/val/".format(subset)
+    base_path = "/home/kana/Documents/Dataset/TS/2DOD/"
+    data_path = base_path+"data/"
+    iter_path = base_path+"cleaning/iter{}/".format(iter_num)
     train_data = "iter{}_{}_train".format(iter_num, subset)
     val_data = "iter{}_{}_val".format(iter_num, subset)
 
-    register_coco_instances(train_data, {}, train_path+"{}_train.json".format(subset), train_path+"data")
-    register_coco_instances(val_data, {}, val_path+"{}_val.json".format(subset), val_path+"data")
+    register_coco_instances(train_data, {}, iter_path+"{}_train.json".format(subset), data_path)
+    register_coco_instances(val_data, {}, iter_path+"{}_val.json".format(subset), data_path)
 
-    cfg = setup(args)
-    os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
 
     cfg_wandb = yaml.safe_load(cfg.dump())
-    wandb.init(project='noisy_label_cleaning_{}'.format(subset), name="iter{}_{}".format(iter_num, subset), config=cfg_wandb, sync_tensorboard=True) 
-
-    if args.eval_only:
-        model = Trainer.build_model(cfg)
-        DetectionCheckpointer(model, save_dir=cfg.OUTPUT_DIR).resume_or_load(
-            cfg.MODEL.WEIGHTS, resume=args.resume
-        )
-        res = Trainer.test(cfg, model)
-        if cfg.TEST.AUG.ENABLED:
-            res.update(Trainer.test_with_TTA(cfg, model))
-        if comm.is_main_process():
-            verify_results(cfg, res)
-        return res
+    wandb.init(project='NLC_{}'.format(subset), name="iter{}".format(iter_num), config=cfg_wandb, sync_tensorboard=True) 
 
     trainer = Trainer(cfg)
     trainer.resume_or_load(resume=args.resume)

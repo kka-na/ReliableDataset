@@ -3,45 +3,43 @@ from detectron2.utils.logger import setup_logger
 setup_logger()
 from detectron2.config import get_cfg
 from detectron2.engine import DefaultPredictor
+from tqdm import tqdm 
 
-import yaml
-import glob
 import cv2
 import os
 import sys
 
-base_path = "/home/kana/Documents/Dataset/TS/2DOD/organized/cleaning/"
+base_path = "/home/kana/Documents/Dataset/TS/2DOD/"
 
 if len(sys.argv) != 3 :
-    print("[Usage]: python3 hyp_tuning.py iter# modelset#")
+    print("[Usage]: python3 inference.py iter# modelset#")
     sys.exit()
 
 iter_num = int(sys.argv[1])
 modelset = str(sys.argv[2])
 
-val_path = base_path+"iter1/{}/val/data/".format(modelset)
-inference_val_path = base_path+"iter{}/{}/val/inference/".format(iter_num, modelset)
+val_path = base_path+"cleaning/iter1/{}_val.txt".format(modelset)
+inference_val_path = base_path+"cleaning/iter{}/{}/val_inference/".format(iter_num, modelset)
 os.makedirs(inference_val_path, exist_ok=True)
-
-w = 1920
-h = 1080 
 
 def init_cfg():               
     cfg = get_cfg()
-    cfg.merge_from_file("../output/iter{}_{}_train/config.yaml".format(iter_num, modelset))
+    cfg.merge_from_file("../output/iter{}/{}/config.yaml".format(iter_num, modelset))
     cfg.DATALOADER.NUM_WORKERS = 4
-    cfg.MODEL.WEIGHTS = "../output/iter{}_{}_train/model_0004999.pth".format(iter_num, modelset)
+    cfg.MODEL.WEIGHTS = "../output/iter{}/{}/model_final.pth".format(iter_num, modelset)
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
     return cfg
 
 def inference():
     cfg = init_cfg()
     predictor = DefaultPredictor(cfg)
-    img_list = glob.glob(val_path+"/*.jpg")
-    for n in range(len(img_list)):
-        img = str(img_list[n])
-        im = cv2.imread(img)
+    f = open(val_path, 'r')
+    img_list = f.readlines()
+    img_list = list(map(lambda s:s.strip(), img_list))
+    for img in tqdm(img_list):
+        im = cv2.imread(img, 1)
         outputs = predictor(im)
+        h,w,c = im.shape
         txt_path = inference_val_path + os.path.splitext(os.path.basename(img))[0]+'.txt'
         with open(txt_path, 'w') as f :
             num = int(outputs["instances"].pred_classes.size(0))
@@ -57,7 +55,6 @@ def inference():
                     pred_w = str(box_w/w)+' '
                     pred_h = str(box_h/h)+'\n'
                 pred_list = [pred_cls, pred_score, pred_cx, pred_cy, pred_w, pred_h]
-            
                 f.writelines(pred_list)
 
 inference()

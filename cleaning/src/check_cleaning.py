@@ -14,6 +14,7 @@ class CheckCleaning():
 
         self.width = 1920
         self.height = 1080
+        self.display = True
     
     def set_values(self):
         if self.subset == "a":
@@ -29,6 +30,9 @@ class CheckCleaning():
         base_path = "/home/kana/Documents/Dataset/TS/2DOD/organized/cleaning/iter{}/".format(self.iter)
         self.data_train_path = base_path+"{}/train/".format(self.subset)
         self.cleaning_txt = self.data_train_path+"cleaning_list.txt"
+        self.cleaning_sample_path = base_path+"cleaning_sample/"
+
+        os.makedirs(self.cleaning_sample_path, exist_ok=True)
 
     def check_cleaning(self):
         self.set_values()
@@ -36,7 +40,6 @@ class CheckCleaning():
         lines = f.readlines()
         randomlist = random.sample(range(1, len(lines)-1), 10)
         for i in randomlist:
-            print(lines[i].strip())
             self.disp_result(lines[i].strip())
             cv2.destroyAllWindows()
     
@@ -48,23 +51,32 @@ class CheckCleaning():
 
         gt_image = self.get_result(image, 0, gt_label)
         inf1_image = self.get_result(image, 1, inf1_label)
-        inf2_image = self.get_result(image, 2, inf2_label)
+        inf1_score = calc_module.calc_score(False, gt_label, inf1_label)
+        cv2.putText(inf1_image, str(inf1_score), (5,30), cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
+        inf2_image = self.get_result(image, 1, inf2_label)
+        inf2_score = calc_module.calc_score(False, gt_label, inf2_label)
+        cv2.putText(inf2_image, str(inf2_score), (5,30), cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2,cv2.LINE_AA)
 
         image = cv2.hconcat([gt_image, inf1_image, inf2_image])
-        image = cv2.resize(image, (int(image.shape[1]/2.5), int(image.shape[0]/2.5)),interpolation = cv2.INTER_AREA)
+        image = cv2.resize(image, (int(image.shape[1]/2), int(image.shape[0]/2)),interpolation = cv2.INTER_AREA)
         
-        print(calc_module.calc_each_score(gt_label, inf1_label), calc_module.calc_each_score(gt_label, inf2_label))
-        cv2.imshow(file_name, image)
-        cv2.waitKey(0)
+        #Display
+        if self.display:
+            cv2.imshow(file_name, image)
+            cv2.waitKey(0)
+        else:
+            cv2.imwrite(self.cleaning_sample_path+file_name+".jpg", image)
     
     def get_result(self, image, _type, label):
         image_cp = image.copy()
         bboxes = calc_module.get_label_list(_type, label)
+        cnt = 0
         for bbox in bboxes:
             color = self.get_color(bbox['cls'])
-            name = self.get_name(bbox['cls'])
+            name = str(cnt) + " " +self.get_name(bbox['cls'])
             cv2.putText(image_cp, name, (int(bbox['bbox'][0]),int(bbox['bbox'][1])-2),cv2.FONT_HERSHEY_SIMPLEX,1,color,2,cv2.LINE_AA )
             cv2.rectangle(image_cp, (int(bbox['bbox'][0]),int(bbox['bbox'][1])), (int(bbox['bbox'][2]),int(bbox['bbox'][3])),color, 3)
+            cnt += 1
         return image_cp
 
     def get_color(self, _cls): #BGR, Pastel Rainbow Colors
