@@ -29,19 +29,29 @@ class MakeCleaningList():
         
         self.base_path = "/home/kana/Documents/Dataset/TS/2DOD"
         self.data_train_path = self.base_path+"/cleaning/iter{}/{}/".format(self.iter, self.subset)
-        self.data_val_path = self.base_path+"/cleaning/iter{}/{}/val_inference/".format(self.iter, self.subset)
-        self.data1_val_path = self.base_path+"/cleaning/iter{}/{}/inference_{}/".format(self.iter, self.subset, self.target1)
-        self.data2_val_path = self.base_path+"/cleaning/iter{}/{}/inference_{}/".format(self.iter, self.subset, self.target2)
-        self.score_th = self.get_score(self.data_val_path)
+        data1_path = self.base_path+"/cleaning/iter{}/{}/".format(self.iter, self.target1)
+        data2_path = self.base_path+"/cleaning/iter{}/{}/".format(self.iter, self.target2)
+        self.data1_val_path = self.data_train_path+"inference_{}/".format(self.target1)
+        self.data2_val_path = self.data_train_path+"inference_{}/".format(self.target2)
+        self.score_th = self.get_score(data1_path, data2_path)
 
     
-    def get_score(self, path):
-        log_path = path + "log_iter{}.txt".format(self.iter)
-        f = open(log_path, 'r')
+    def get_score(self, path1, path2):
+        log_path1 = path1 + "log_iter{}.txt".format(self.iter)
+        log_path2 = path2 + "log_iter{}.txt".format(self.iter)
+        f = open(log_path1, 'r')
         lines = f.readlines()
         for line in lines:
             pass
-        score = float(line.split()[2])
+        score1 = float(line.split()[2])
+
+        f = open(log_path2, 'r')
+        lines = f.readlines()
+        for line in lines:
+            pass
+        score2 = float(line.split()[2])
+
+        score = float(score1+score2)/(2.0+10e-10)
         return score
 
     def make_list(self):
@@ -55,32 +65,41 @@ class MakeCleaningList():
         labels_cnt = 0
         cleaning_cnt = 0
 
-        
+        score_result_txt = self.data_train_path+"filtering_score_list.txt"
+        f = open(score_result_txt, 'w')
+        f.write("Filtering Score Results "+str(labels_cnt)+"\n")
+
         if len(glob.glob(inf1_dir+"*.txt")) <= len(glob.glob(inf2_dir+"*.txt")):
             labels_cnt = len(glob.glob(inf1_dir+"*.txt"))
-            for inf1_path in sorted(glob.glob(inf1_dir+"*.txt")):
-                gt_path = gt_dir+os.path.splitext(os.path.basename(inf1_path))[0]+'.txt'
-                inf2_path = inf2_dir+os.path.splitext(os.path.basename(inf1_path))[0]+'.txt'
-                img_path =  gt_dir+os.path.splitext(os.path.basename(inf1_path))[0]+'.jpg'
+            for inf1_path in tqdm(sorted(glob.glob(inf1_dir+"*.txt"))):
+                file_name = str(os.path.splitext(os.path.basename(inf1_path))[0])
+                gt_path = gt_dir+file_name+'.txt'
+                inf2_path = inf2_dir+file_name+'.txt'
+                img_path =  gt_dir+file_name+'.jpg'
                 im = cv2.imread(img_path, 1)
                 h,w,c = im.shape
                 score = self.calc_score(gt_path, inf1_path, inf2_path, w, h)
+                f.write(file_name+" "+str(score)+"\n")
+                print(file_name+" "+str(score)+" ? "+str(self.score_th))
                 if score <= self.score_th:
-                    cleaning_list.append(str(os.path.splitext(os.path.basename(inf1_path))[0]))
+                    cleaning_list.append(file_name)
                     cleaning_cnt += 1
 
         elif len(glob.glob(inf2_dir+"*.txt")) < len(glob.glob(inf1_dir+"*.txt")):
             labels_cnt = len(glob.glob(inf2_dir+"*.txt"))
-            for inf2_path in sorted(glob.glob(inf2_dir+"*.txt")):
-                gt_path = gt_dir+os.path.splitext(os.path.basename(inf1_path))[0]+'.txt'
-                inf1_path = inf1_dir+os.path.splitext(os.path.basename(inf2_path))[0]+'.txt'
-                img_path =  gt_dir+os.path.splitext(os.path.basename(inf1_path))[0]+'.jpg'
+            for inf2_path in tqdm(sorted(glob.glob(inf2_dir+"*.txt"))):
+                file_name = str(os.path.splitext(os.path.basename(inf2_path))[0])
+                gt_path = gt_dir+file_name+'.txt'
+                inf1_path = inf1_dir+file_name+'.txt'
+                img_path =  gt_dir+file_name+'.jpg'
                 im = cv2.imread(img_path, 1)
                 h,w,c = im.shape
                 score = self.calc_score(gt_path, inf1_path, inf2_path, w, h)
+                f.write(file_name+" "+str(score)+"\n")
                 if score <= self.score_th:
-                    cleaning_list.append(str(os.path.splitext(os.path.basename(inf2_path))[0]))
+                    cleaning_list.append(file_name)
                     cleaning_cnt += 1
+        f.close()
 
         cleaning_txt = self.data_train_path+"cleaning_list.txt"
         f = open(cleaning_txt, 'w')
@@ -98,8 +117,8 @@ class MakeCleaningList():
             # mconf2 = calc_module.calc_mconf(inf2_bboxes)
             # score = (mconf1+mconf2)/2
 
-            inf1_score = float(calc_module.calc_score(False, gt_path, inf1_path, width, height))
-            inf2_score = float(calc_module.calc_score(False, gt_path, inf2_path, width, height))
+            inf1_score = float(calc_module.calc_score(gt_path, inf1_path, width, height))
+            inf2_score = float(calc_module.calc_score(gt_path, inf2_path, width, height))
 
             score = float(inf1_score+inf2_score)/(2.0+10e-10)
         return score

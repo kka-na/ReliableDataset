@@ -1,6 +1,5 @@
-import glob
 import random
-import os
+from tqdm import tqdm
 import sys
 
 if len(sys.argv) != 2 :
@@ -10,50 +9,33 @@ if len(sys.argv) != 2 :
 iter_num = int(sys.argv[1])
 
 base = "/home/kana/Documents/Dataset/TS/2DOD/"
-data = sorted(glob.glob(base+"data/*.jpg"))
+iter_folder = f"{base}cleaning/iter{iter_num}/"
+data_list_txt = f"{iter_folder}data.txt"
+with open(data_list_txt) as f:
+    data = [line.strip() for line in f]
 
-data_size = len(data)
-separation_size = int(data_size*0.33)
-
-shuffled = list(data)
 random.seed(1)
-random.shuffle(shuffled)
+shuffled = random.sample(data, len(data))
+separation_size = len(data) // 3
 
-a_data = shuffled[:separation_size]
-b_data = shuffled[separation_size:2*separation_size]
-c_data = shuffled[2*separation_size:]
-
-iter_folder = base+'cleaning/iter{}/'.format(iter_num)
-
-os.makedirs(iter_folder, exist_ok=True)
+split_data = {'a': shuffled[:separation_size],
+              'b': shuffled[separation_size:2*separation_size],
+              'c': shuffled[2*separation_size:],
+              'eval': shuffled}
 
 def write_txt(a, data_list):
-    txt_path = iter_folder+'{}.txt'.format(a)
-    file = open(txt_path, 'w')
-    for f in data_list:
-        file.write("{}\n".format(f))
-
-write_txt('a', a_data)
-write_txt('b', b_data)
-write_txt('c', c_data)
-write_txt('eval', shuffled)
-
+    with open(f"{iter_folder}{a}.txt", 'w') as f:
+        f.writelines(f"{file}\n" for file in data_list)
 
 def split(a, data_list):
-    data_size = len(data_list)
-    split_size = int(data_size*0.8)
-    shuffled = data_list
     random.seed(1)
-    random.shuffle(shuffled)
+    shuffled = random.sample(data_list, len(data_list))
+    split_size = int(len(shuffled) * 0.8)
+    train_data, val_data = shuffled[:split_size], shuffled[split_size:]
 
-    train_data = shuffled[:split_size]
-    val_data = shuffled[split_size:]
+    write_txt(f"{a}_train", train_data)
+    write_txt(f"{a}_val", val_data)
 
-    write_txt(a+"_train",train_data)
-    write_txt(a+"_val", val_data)
-
-split('a', a_data)
-split('b', b_data)
-split('c', c_data)
-split('eval', shuffled)
-    
+for a, data_list in tqdm(split_data.items()):
+    write_txt(a, data_list)
+    split(a, data_list)

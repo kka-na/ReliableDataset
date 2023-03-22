@@ -1,6 +1,7 @@
 import os
 import sys
 import glob
+from tqdm import tqdm
 import calc_module
 import cv2
 from datetime import datetime
@@ -23,9 +24,11 @@ class CalcConfTh():
         frame_cnt = 0
         score_sum = 0.0
         
-        gt_dir = self.base_path+"data/"
+        gt_dir = self.base_path+"/data/"
         inf_list =  glob.glob(self.inference_path+"*.txt")
-        for inf_path in inf_list :
+        for inf_path in tqdm(inf_list) :
+            if os.path.splitext(os.path.basename(inf_path))[0] == 'log_iter{}'.format(self.iter):
+                continue
             gt_path = gt_dir+os.path.splitext(os.path.basename(inf_path))[0]+'.txt'
             img_path =  gt_dir+os.path.splitext(os.path.basename(inf_path))[0]+'.jpg'
             im = cv2.imread(img_path, 1)
@@ -40,7 +43,7 @@ class CalcConfTh():
                 #     frame_cnt += 1
 
                 # Second Experiments, calculate e*conf + iou\
-                score_sum += calc_module.calc_score_threshold(gt_path, inf_path, w, h)
+                score_sum += calc_module.calc_score_threshold(gt_path, inf_path, w, h, im)
                 frame_cnt += 1
 
         #First Experiments
@@ -50,7 +53,7 @@ class CalcConfTh():
         # Second Experiments
         average_score = score_sum / ( frame_cnt + 1e-10 )
 
-        log_path = self.inference_path + "log_iter{}.txt".format(self.iter)
+        log_path = "{}/cleaning/iter{}/{}/log_iter{}.txt".format(self.base_path, self.tier, self.subset, self.iter)
         now_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S ')
         if os.path.isfile(log_path): 
             f = open(log_path, 'a')

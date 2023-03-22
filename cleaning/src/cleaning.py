@@ -1,35 +1,39 @@
-import glob
 import sys
-import os
+from tqdm import tqdm
 
 class Cleaning():
     def __init__(self):
         super(Cleaning, self).__init__()
         self.iter = 0
-        self.base_path = "/home/kana/Documents/Dataset/TS/2DOD/organized/"
+        self.base_path = "/home/kana/Documents/Dataset/TS/2DOD"
     
     def set_values(self):
-        self.data_path = self.base_path+"data/"
-        self.label_path = self.base_path+"label/"
+        self.data_path =  "{}/data".format(self.base_path)
+        self.iter_path = "{}/cleaning/iter{}".format(self.base_path, self.iter)
         self.cleaning_list = []
-        self.cleaning_list.append(str(self.base_path+("cleaning/iter{}/{}/train/cleaning_list.txt".format(self.iter, "a"))))
-        self.cleaning_list.append(str(self.base_path+("cleaning/iter{}/{}/train/cleaning_list.txt".format(self.iter, "b"))))
-        self.cleaning_list.append(str(self.base_path+("cleaning/iter{}/{}/train/cleaning_list.txt".format(self.iter, "c"))))
+        self.cleaning_list.append("{}/{}/cleaning_list.txt".format(self.iter_path, "a"))
+        self.cleaning_list.append("{}/{}/cleaning_list.txt".format(self.iter_path, "b"))
+        self.cleaning_list.append("{}/{}/cleaning_list.txt".format(self.iter_path, "c"))
 
     def cleaning(self):
         self.set_values()
+        f_pre_list = []
+        with open("{}/data.txt".format(self.iter_path), 'r') as f_pre:
+            f_pre_list = set(line.strip() for line in f_pre)
+
         for file in self.cleaning_list:
-            f = open(file, 'r')
-            lines = f.readlines()
-            for line in lines:
-                name = line.split('\n')[0]
-                img_path = self.data_path+name+".jpg"
-                label_path = self.label_path+name+".txt"
-                if os.path.isfile(img_path):
-                    os.remove(img_path)
-                if os.path.isfile(label_path):
-                    os.remove(label_path)
-            f.close()
+            with open(file, 'r') as f:
+                lines = f.readlines()
+                for line in tqdm(lines):
+                    name = line.strip()
+                    jpg = f"{self.data_path}/{name}.jpg"
+                    f_pre_list.discard(jpg)
+        
+        with open("{}/data_cleaned.txt".format(self.iter_path), 'w') as f_aft:
+            for n in f_pre_list:
+                f_aft.write("%s\n"%n)
+            
+        
 
 if __name__=="__main__":
     if len(sys.argv) != 2 :
