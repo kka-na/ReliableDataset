@@ -14,23 +14,26 @@ class CalcConfTh():
         self.iou_th = 0.3 # iter0 : 0.3
         self.width = 0
         self.height = 0
-        self.base_path = "/home/kana/Documents/Dataset/TS/2DOD"
+        self.base_path = "/home/kana/Documents/Dataset"
+        self.dataset_name = "TS"
 
     def calc_threshold(self):
-        self.inference_path = "{}/cleaning/iter{}/{}/val_inference/".format(self.base_path, self.iter, self.subset)
+        self.inference_path = "{}/{}/cleaning/iter{}/{}/val_inference/".format(self.base_path, self.dataset_name, self.iter, self.subset)
 
         mconf_sum = 0.0
         miou_sum = 0.0
         frame_cnt = 0
         score_sum = 0.0
         
-        gt_dir = self.base_path+"/data/"
+        gt_dir = self.base_path+"/{}/data/".format(self.dataset_name)
         inf_list =  glob.glob(self.inference_path+"*.txt")
         for inf_path in tqdm(inf_list) :
             if os.path.splitext(os.path.basename(inf_path))[0] == 'log_iter{}'.format(self.iter):
                 continue
             gt_path = gt_dir+os.path.splitext(os.path.basename(inf_path))[0]+'.txt'
             img_path =  gt_dir+os.path.splitext(os.path.basename(inf_path))[0]+'.jpg'
+            if not os.path.exists(img_path):
+                img_path =  gt_dir+os.path.splitext(os.path.basename(inf_path))[0]+'.png'
             im = cv2.imread(img_path, 1)
             h,w,c = im.shape
             if os.path.getsize(inf_path) != 0 and os.path.getsize(gt_path) != 0 :
@@ -53,7 +56,7 @@ class CalcConfTh():
         # Second Experiments
         average_score = score_sum / ( frame_cnt + 1e-10 )
 
-        log_path = "{}/cleaning/iter{}/{}/log_iter{}.txt".format(self.base_path, self.tier, self.subset, self.iter)
+        log_path = "{}/{}/cleaning/iter{}/{}/log_iter{}.txt".format(self.base_path, self.dataset_name, self.iter, self.subset, self.iter)
         now_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S ')
         if os.path.isfile(log_path): 
             f = open(log_path, 'a')
@@ -80,11 +83,14 @@ class CalcConfTh():
         return mconf, miou
         
 if __name__ == "__main__":
-    if len(sys.argv) != 3 :
-        print("[Usage]: python3 calc_conf_th.py iter# subset#")
+    if len(sys.argv) != 4 :
+        print("[Usage]: python3 calc_conf_th.py dataset_name iter# subset#")
         sys.exit()
     cct = CalcConfTh()
-    cct.iter = int(sys.argv[1])
-    cct.subset = str(sys.argv[2])
+    cct.dataset_name = str(sys.argv[1])
+    cct.iter = int(sys.argv[2])
+    cct.subset = str(sys.argv[3])
     cct.calc_threshold()
+    print("Threshold Calculated [ ", str(sys.argv[1]), int(sys.argv[2]), str(sys.argv[3]), " ] Successfully.")
+    sys.exit(0)
 

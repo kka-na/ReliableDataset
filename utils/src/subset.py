@@ -2,13 +2,14 @@ import random
 from tqdm import tqdm
 import sys
 
-if len(sys.argv) != 2 :
-    print("[Usage]: python3 rand_split.py iter#")
+if len(sys.argv) != 3 :
+    print("[Usage]: python3 rand_split.py dataset_name iter#")
     sys.exit()
 
-iter_num = int(sys.argv[1])
+dataset_name = str(sys.argv[1])
+iter_num = int(sys.argv[2])
 
-base = "/home/kana/Documents/Dataset/TS/2DOD/"
+base = "/home/kana/Documents/Dataset/{}/".format(dataset_name)
 iter_folder = f"{base}cleaning/iter{iter_num}/"
 data_list_txt = f"{iter_folder}data.txt"
 with open(data_list_txt) as f:

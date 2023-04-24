@@ -107,7 +107,9 @@ def get_color(_cls): #BGR, Pastel Rainbow Colors
                 [161,249,250],[150,221,195],[192,211,154],[225,209,140],[223,183,141]]
     return colors[int(_cls)]
 def get_name(_cls):
-        names = ['person', 'bicycle', 'car','motorcycle','special vehicle','bus','-','truck', 'traffic sign','traffic light']
+        #names = ['person', 'bicycle', 'car','motorcycle','special vehicle','bus','-','truck', 'traffic sign','traffic light']
+        #names = ['Car', 'Van', 'Truck', 'Pedestrian', 'Person_sitting', 'Cyclist', 'Tram', 'DontCare']
+        names = ["VEHICLE","PEDESTRIAN","CYCLIST","SIGN","UNKNOWN"]
         return names[int(_cls)]
 
 def get_result(image, arr):

@@ -9,24 +9,25 @@ import cv2
 import os
 import sys
 
-base_path = "/home/kana/Documents/Dataset/TS/2DOD/"
+base_path = "/home/kana/Documents/Dataset"
 
-if len(sys.argv) != 3 :
-    print("[Usage]: python3 inference.py iter# modelset#")
+if len(sys.argv) != 4 :
+    print("[Usage]: python3 inference.py datset_name iter# modelset#")
     sys.exit()
 
-iter_num = int(sys.argv[1])
-modelset = str(sys.argv[2])
+dataset_name = str(sys.argv[1])
+iter_num = int(sys.argv[2])
+modelset = str(sys.argv[3])
 
-val_path = base_path+"cleaning/iter1/{}_val.txt".format(modelset)
-inference_val_path = base_path+"cleaning/iter{}/{}/val_inference/".format(iter_num, modelset)
+val_path = base_path+"/{}/cleaning/iter1/{}_val.txt".format(dataset_name, modelset)
+inference_val_path = base_path+"/{}/cleaning/iter{}/{}/val_inference/".format(dataset_name, iter_num, modelset)
 os.makedirs(inference_val_path, exist_ok=True)
 
 def init_cfg():               
     cfg = get_cfg()
-    cfg.merge_from_file("../output/iter{}/{}/config.yaml".format(iter_num, modelset))
+    cfg.merge_from_file("../output/{}/iter{}/{}/config.yaml".format(dataset_name, iter_num, modelset))
     cfg.DATALOADER.NUM_WORKERS = 4
-    cfg.MODEL.WEIGHTS = "../output/iter{}/{}/model_final.pth".format(iter_num, modelset)
+    cfg.MODEL.WEIGHTS = "../output/{}/iter{}/{}/model_final.pth".format(dataset_name, iter_num, modelset)
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
     return cfg
 
@@ -58,4 +59,5 @@ def inference():
                 f.writelines(pred_list)
 
 inference()
-    
+print("Valsets Inferenced [ ", dataset_name, iter_num, modelset, " ] Successfully.")
+sys.exit(0)      

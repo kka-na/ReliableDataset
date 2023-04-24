@@ -1,4 +1,5 @@
 import detectron2
+import sys
 from detectron2.utils.logger import setup_logger
 setup_logger()
 from detectron2.config import get_cfg
@@ -9,26 +10,27 @@ import os
 import sys
 from tqdm import tqdm 
 
-base_path = "/home/kana/Documents/Dataset/TS/2DOD/"
+base_path = "/home/kana/Documents/Dataset"
 
-if len(sys.argv) != 4 :
-    print("[Usage]: python3 hyp_tuning.py iter# modeltset# subset#")
+if len(sys.argv) != 5 :
+    print("[Usage]: python3 hyp_tuning.py datset_name  iter# modeltset# subset#")
     sys.exit()
 
-iter_num = int(sys.argv[1])
-modelset = str(sys.argv[2])
-subset = str(sys.argv[3])
+dataset_name = str(sys.argv[1])
+iter_num = int(sys.argv[2])
+modelset = str(sys.argv[3])
+subset = str(sys.argv[4])
 
-train_path = base_path+"cleaning/iter{}/{}_train.txt".format(iter_num, modelset)
-inference_path = base_path+"cleaning/iter{}/{}/inference_{}/".format(iter_num, modelset, subset)
+train_path = base_path+"/{}/cleaning/iter{}/{}_train.txt".format(dataset_name, iter_num, modelset)
+inference_path = base_path+"/{}/cleaning/iter{}/{}/inference_{}/".format(dataset_name, iter_num, modelset, subset)
 os.makedirs(inference_path, exist_ok=True)
 
 
 def init_cfg():               
     cfg = get_cfg()
-    cfg.merge_from_file("../output/iter{}/{}/config.yaml".format(iter_num, subset))
+    cfg.merge_from_file("../output/{}/iter{}/{}/config.yaml".format(dataset_name, iter_num, subset))
     cfg.DATALOADER.NUM_WORKERS = 4
-    cfg.MODEL.WEIGHTS = "../output/iter{}/{}/model_final.pth".format(iter_num, subset)
+    cfg.MODEL.WEIGHTS = "../output/{}/iter{}/{}/model_final.pth".format(dataset_name, iter_num, subset)
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
     return cfg
 
@@ -62,4 +64,5 @@ def inference():
                 f.writelines(pred_list)
 
 inference()
-    
+print("Subsets Inferenced [ ", dataset_name, iter_num, modelset, subset, " ] Successfully.")
+sys.exit(0)    

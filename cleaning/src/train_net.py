@@ -71,10 +71,11 @@ def main(args):
     os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
     
     output_dir = str(cfg.OUTPUT_DIR).split('/')
-    iter_num = output_dir[2][4:]
-    subset=output_dir[3]
+    dataset_name = output_dir[2]
+    iter_num = output_dir[3][4:]
+    subset=output_dir[4]
 
-    base_path = "/home/kana/Documents/Dataset/TS/2DOD/"
+    base_path = "/home/kana/Documents/Dataset/{}/".format(dataset_name)
     data_path = base_path+"data/"
     iter_path = base_path+"cleaning/iter{}/".format(iter_num)
     train_data = "iter{}_{}_train".format(iter_num, subset)
@@ -85,7 +86,7 @@ def main(args):
 
 
     cfg_wandb = yaml.safe_load(cfg.dump())
-    wandb.init(project='NLC_{}'.format(subset), name="iter{}".format(iter_num), config=cfg_wandb, sync_tensorboard=True) 
+    wandb.init(project='NLC_{}_{}'.format(dataset_name, subset), name="iter{}".format(iter_num), config=cfg_wandb, sync_tensorboard=True) 
 
     trainer = Trainer(cfg)
     trainer.resume_or_load(resume=args.resume)
@@ -93,7 +94,7 @@ def main(args):
         trainer.register_hooks(
             [hooks.EvalHook(0, lambda: trainer.test_with_TTA(cfg, trainer.model))]
         )
-    return trainer.train()
+    trainer.train()
 
 
 if __name__ == "__main__":
@@ -107,3 +108,5 @@ if __name__ == "__main__":
         dist_url=args.dist_url,
         args=(args,),
     )
+    print("Train Over Successfully.")
+    sys.exit(0)

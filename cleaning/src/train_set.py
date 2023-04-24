@@ -11,13 +11,14 @@ from detectron2.config import get_cfg
 from detectron2.data.datasets import register_coco_instances
 
 if len(sys.argv) != 4 :
-    print("[Usage]: python3 base_path iter# subset#")
+    print("[Usage]: python3 dataset_name  iter# subset#")
     sys.exit()
 
-base_path = str(sys.argv[1])
+
+dataset_name  = str(sys.argv[1])
 iter_num = int(sys.argv[2])
 subset = str(sys.argv[3])
-
+base_path = "/home/kana/Documents/Dataset/{}".format(dataset_name)
 data_path = base_path+"data/"
 iter_path = base_path+"cleaning/iter{}/".format(iter_num)
 train_data = "iter{}_{}_train".format(iter_num, subset)
@@ -40,8 +41,8 @@ def get_model():
 
 model_name = str(get_model())
 
-os.makedirs("../configs/iter{}/".format(iter_num), exist_ok=True)
-os.makedirs("../output/iter{}/".format(iter_num), exist_ok=True)
+os.makedirs("../configs/{}/iter{}/".format(dataset_name, iter_num), exist_ok=True)
+os.makedirs("../output/{}/iter{}/".format(dataset_name, iter_num), exist_ok=True)
 
 cfg = get_cfg()
 cfg.merge_from_file(model_zoo.get_config_file(model_name))
@@ -57,9 +58,11 @@ cfg.SOLVER.STEPS = []
 cfg.SOLVER.LR_SCHEDULER_NAME="WarmupCosineLR"
 cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 256
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 10 
-cfg.OUTPUT_DIR = "../output/iter{}/{}".format(iter_num, subset)
+cfg.OUTPUT_DIR = "../output/{}/iter{}/{}".format(dataset_name, iter_num, subset)
 cfg_file = yaml.safe_load(cfg.dump())
 
 
-with open("../configs/iter{}/{}.yaml".format(iter_num, subset), 'w') as f:
+with open("../configs/{}/iter{}/{}.yaml".format(dataset_name, iter_num, subset), 'w') as f:
     yaml.dump(cfg_file, f)
+print("Train Set [ ", dataset_name, iter_num, subset, " ] Successfully.")
+sys.exit(0)
