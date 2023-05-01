@@ -1,0 +1,55 @@
+{
+    "Dataset": "KITTI",
+    "Iteration1": {
+        "a": {
+            "NumOfData": 153,
+            "NumOfDelete": 0,
+            "Accuracy": 5.21,
+            "ScoreTh": 0.0
+        },
+        "b": {
+            "NumOfData": 153,
+            "NumOfDelete": 0,
+            "Accuracy": 0.0,
+            "ScoreTh": 0.0
+        },
+        "c": {
+            "NumOfData": 154,
+            "NumOfDelete": 0,
+            "Accuracy": 46.3,
+            "ScoreTh": 0.0
+        },
+        "eval": {
+            "NumOfData": 577,
+            "NumOfDelete": 0,
+            "Accuracy": 6265.55,
+            "DeletingRatio": 1.0
+        }
+    },
+    "Iteration2": {
+        "a": {
+            "NumOfData": 153,
+            "NumOfDelete": 0,
+            "Accuracy": 71.49,
+            "ScoreTh": 0.0
+        },
+        "b": {
+            "NumOfData": 153,
+            "NumOfDelete": 0,
+            "Accuracy": 519.84,
+            "ScoreTh": 0.0
+        },
+        "c": {
+            "NumOfData": 154,
+            "NumOfDelete": 0,
+            "Accuracy": 47.55,
+            "ScoreTh": 0.0
+        },
+        "eval": {
+            "NumOfData": 577,
+            "NumOfDelete": 0,
+            "Accuracy": 6369.16,
+            "DeletingRatio": 1.0
+        }
+    }
+}
