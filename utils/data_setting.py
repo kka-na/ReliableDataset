@@ -62,6 +62,18 @@ class DataSetting(QObject):
             shutil.rmtree(self.iter_path)  
         os.mkdir(self.iter_path)
 
+        def check_and_make(path):
+            if not os.path.exists(path):
+                os.mkdir(path)
+            else:
+                pass
+        
+        check_and_make("./training/")
+        check_and_make("./training/configs")
+        check_and_make("./training/output")
+        check_and_make(f"./training/configs/{self.dataset_name}")
+        check_and_make(f"./training/output/{self.dataset_name}")
+
         with open(f"{self.base_path}/classes.txt", "r") as f:
             self.classes = f.readlines()
         if self.iter == "1":
