@@ -68,14 +68,16 @@ class DataSetting(QObject):
             else:
                 pass
         
+        check_and_make(f"{self.base_path}/cleaning/")
         check_and_make("./training/")
         check_and_make("./training/configs")
         check_and_make("./training/output")
         check_and_make(f"./training/configs/{self.dataset_name}")
         check_and_make(f"./training/output/{self.dataset_name}")
+        check_and_make(f"{self.base_path}/whitening/")
 
         with open(f"{self.base_path}/classes.txt", "r") as f:
-            self.classes = f.readlines()
+            self.classes = [line.rstrip() for line in f.readlines()]
         if self.iter == "1":
             image_paths = []
             for ext in extensions:

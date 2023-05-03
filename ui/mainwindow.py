@@ -129,6 +129,10 @@ class Ui_MainWindow(object):
         self.pushButton_8.setMinimumSize(QtCore.QSize(0, 30))
         self.pushButton_8.setObjectName("pushButton_8")
         self.horizontalLayout.addWidget(self.pushButton_8)
+        self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_4.setEnabled(False)
+        self.pushButton_4.setObjectName("pushButton_4")
+        self.horizontalLayout.addWidget(self.pushButton_4)
         self.gridLayout.addLayout(self.horizontalLayout, 2, 0, 1, 1)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
@@ -447,6 +451,7 @@ class Ui_MainWindow(object):
         self.pushButton_6.setText(_translate("MainWindow", "Score Ensemble"))
         self.pushButton_7.setText(_translate("MainWindow", "Deleting"))
         self.pushButton_8.setText(_translate("MainWindow", "Check Deleting"))
+        self.pushButton_4.setText(_translate("MainWindow", "Calc Densities"))
         self.label_5.setStyleSheet(_translate("MainWindow", "border-bottom-style:solid;\n"
 "border-bottom-width: 2px;\n"
 "border-color: rgb(0, 0, 0);"))

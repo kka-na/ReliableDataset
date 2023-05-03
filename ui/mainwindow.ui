@@ -258,6 +258,16 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_4">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Calc Densities</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item row="5" column="0">

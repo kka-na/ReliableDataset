@@ -18,7 +18,7 @@ class TrainSetting():
     def init_path(self):
         self.base_path = f"/home/kana/Documents/Dataset/{self.dataset_name}"
         with open(f"{self.base_path}/classes.txt", "r") as f:
-            classes = f.readlines()
+            classes = [line.rstrip() for line in f.readlines()]
         self.class_num = len(classes)
         self.iter_path = f"{self.base_path}/cleaning/iter{self.iter}"
         self.data_path = f"{self.base_path}/data/"
@@ -54,9 +54,9 @@ class TrainSetting():
         cfg.TEST.EVAL_PERIOD = 500
         cfg.DATALOADER.NUM_WORKERS = 8
         cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(f"COCO-Detection/{model_name}")
-        cfg.SOLVER.IMS_PER_BATCH = 8
-        cfg.SOLVER.BASE_LR = 0.01
-        cfg.SOLVER.MAX_ITER = 5000
+        cfg.SOLVER.IMS_PER_BATCH = 2
+        cfg.SOLVER.BASE_LR = 0.1
+        cfg.SOLVER.MAX_ITER = 20#5000
         cfg.SOLVER.STEPS = []
         cfg.SOLVER.LR_SCHEDULER_NAME="WarmupCosineLR"
         cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 256

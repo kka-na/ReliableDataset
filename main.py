@@ -10,7 +10,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from ui.mainwindow import Ui_MainWindow
-from utils import data_setting, train_setting, train_start, score_ensemble, cleaning, check_cleaning
+from utils import data_setting, deleting_train_setting, deleting_train_start, score_ensemble, cleaning, check_cleaning, calc_densities
 
 
 class MainWindow(QMainWindow):
@@ -31,6 +31,7 @@ class MainWindow(QMainWindow):
         self.ui.pushButton_6.clicked.connect(self.do_score_ensemble)
         self.ui.pushButton_7.clicked.connect(self.do_deleting)
         self.ui.pushButton_8.clicked.connect(self.do_check_deleting)
+        self.ui.pushButton_4.clicked.connect(self.do_calc_densities)
         self.ui.pushButton_2.clicked.connect(self.go_sample_prev)
         self.ui.pushButton_3.clicked.connect(self.go_sample_next)
     
@@ -43,11 +44,12 @@ class MainWindow(QMainWindow):
     def initialize(self):
         self.ds = data_setting.DataSetting(self.info)
         self.class_num = 0
-        self.tsi = train_setting.TrainSetting(self.info)
-        self.ts = train_start.TrainStart(self.info)
+        self.tsi = deleting_train_setting.TrainSetting(self.info)
+        self.ts = deleting_train_start.TrainStart(self.info)
         self.se = score_ensemble.ScoreEnsemble(self.info)
         self.c = cleaning.Cleaning(self.info)
         self.cc = check_cleaning.CheckCleaning(self.info)
+        self.cd = calc_densities.CalcDensities(self.info)
         self.random_samples = []
         self.sample_index = 0
 
@@ -78,6 +80,7 @@ class MainWindow(QMainWindow):
         self.c.send_success.connect(self.c_success)
         self.cc.send_random_samples.connect(self.set_random_samples)
         self.cc.send_success.connect(self.cc_success)
+        self.cd.send_success.connect(self.cd_success)
 
     def set_enabled(self):
         self.ui.startButton.setEnabled(True)
@@ -86,6 +89,7 @@ class MainWindow(QMainWindow):
         self.ui.pushButton_6.setEnabled(True)
         self.ui.pushButton_7.setEnabled(True)
         self.ui.pushButton_8.setEnabled(True)
+        self.ui.pushButton_4.setEnabled(True)
 
     def set_log_info(self):
         path = f"./log/{self.dataset_name}.json"
@@ -119,6 +123,7 @@ class MainWindow(QMainWindow):
         self.c.cleaning()
         self.save_log()
         self.cc.check_cleaning()
+        self.cd.calc_densities()
         
     def save_log(self):
         path = f"./log/{self.dataset_name}.json"
@@ -152,6 +157,8 @@ class MainWindow(QMainWindow):
     def do_check_deleting(self):
         self.cc.check_cleaning()
 
+    def do_calc_densities(self):
+        self.cd.calc_densities()
 
     @pyqtSlot(str,int)
     def set_data_num(self, sub, num):
@@ -249,7 +256,10 @@ class MainWindow(QMainWindow):
     def cc_success(self):
         self.ui.pushButton_8.setStyleSheet("QPushButton{color:rgb(255,255,255);background-color:rgb(0,0,0);}")
         QCoreApplication.processEvents()
-
+    @pyqtSlot()
+    def cd_success(self):
+        self.ui.pushButton_4.setStyleSheet("QPushButton{color:rgb(255,255,255);background-color:rgb(0,0,0);}")
+        QCoreApplication.processEvents()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

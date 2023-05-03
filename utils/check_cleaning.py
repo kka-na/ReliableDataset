@@ -18,7 +18,10 @@ class CheckCleaning(QObject):
         self.sub_list = ['a','b','c']
 
         self.sample_path = f"{self.iter_path}/deleted_sample/"
-        os.makedirs(self.sample_path, exist_ok=True)        
+        os.makedirs(self.sample_path, exist_ok=True)
+
+        with open(f"{self.base_path}/classes.txt", "r") as f:
+            self.classes = [line.rstrip() for line in f.readlines()]       
 
     send_random_samples = pyqtSignal(object)
     send_success = pyqtSignal()
@@ -48,18 +51,8 @@ class CheckCleaning(QObject):
         h,w,c = image.shape
         gt_label = f"{self.data_path}/{file_name}.txt"
         gt = calc_module.get_gt_bbox(gt_label, w, h)
-        gt_image = self.get_result(image, gt)
+        gt_image = calc_module.get_result(image, gt, self.classes)
         save_path = f"{self.sample_path}/{file_name}.{ext}"
         cv2.imwrite(save_path, gt_image)
         return_image = cv2.cvtColor(gt_image, cv2.COLOR_BGR2RGB)
         return return_image
-    
-    def get_result(self, image,bboxes):
-        image_cp = image.copy()
-        for i, di in enumerate(bboxes):
-            ll = list(di.items())[0]
-            color = calc_module.get_color(int(ll[0]))
-            name = str(i) + " " +calc_module.get_name(int(ll[0]))
-            cv2.putText(image_cp, name, (int(ll[1][0]),int(ll[1][1])-2),cv2.FONT_HERSHEY_SIMPLEX,1,color,2,cv2.LINE_AA )
-            cv2.rectangle(image_cp, (int(ll[1][0]),int(ll[1][1])), (int(ll[1][2]),int(ll[1][3])),color, 3)
-        return image_cp

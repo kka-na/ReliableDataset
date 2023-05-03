@@ -51,5 +51,31 @@
             "Accuracy": 6369.16,
             "DeletingRatio": 1.0
         }
+    },
+    "Iteration3": {
+        "a": {
+            "NumOfData": 153,
+            "NumOfDelete": 0,
+            "Accuracy": 0.38,
+            "ScoreTh": 0.0
+        },
+        "b": {
+            "NumOfData": 153,
+            "NumOfDelete": 0,
+            "Accuracy": 93.67,
+            "ScoreTh": 0.0
+        },
+        "c": {
+            "NumOfData": 154,
+            "NumOfDelete": 0,
+            "Accuracy": 293.38,
+            "ScoreTh": 0.0
+        },
+        "eval": {
+            "NumOfData": 577,
+            "NumOfDelete": 0,
+            "Accuracy": 6144.19,
+            "DeletingRatio": 1.0
+        }
     }
 }
