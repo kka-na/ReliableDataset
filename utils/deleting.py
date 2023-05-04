@@ -3,9 +3,9 @@ import os
 from tqdm import tqdm
 from PyQt5.QtCore import *
 
-class Cleaning(QObject):
+class Deleting(QObject):
     def __init__(self, info):
-        super(Cleaning, self).__init__()
+        super(Deleting, self).__init__()
         self.dataset_name = info[0]
         self.iter = info[1]
         self.init_path()
@@ -18,7 +18,7 @@ class Cleaning(QObject):
 
     send_success = pyqtSignal()
     send_ratio = pyqtSignal(float)
-    def cleaning(self):
+    def deleting(self):
         f_pre_list = []
         with open(f"{self.iter_path}/data.txt", 'r') as f_pre:
             f_pre_list = set(line.strip() for line in f_pre)

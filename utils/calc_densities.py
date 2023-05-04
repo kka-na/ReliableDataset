@@ -1,36 +1,38 @@
 import os
-import sys
-import glob
 import io
+import shutil
 from imgsize import get_size
-from tqdm import tqdm
 import utils.calc_module as calc_module
 from PyQt5.QtCore import *
-
 
 class CalcDensities(QObject):
     def __init__(self, info):
         super(CalcDensities, self).__init__()
         self.dataset_name = info[0]
         self.iter = info[1]
+        self.reduct = info[2]
         self.init_path() 
 
     def init_path(self):
         self.base_path = f"/home/kana/Documents/Dataset/{self.dataset_name}"
         self.iter_path = f"{self.base_path}/cleaning/iter{self.iter}"
         self.data_path = f"{self.base_path}/data/"
-        self.whitening_path = f"{self.base_path}/whitening/"
-        dir_list = os.listdir(self.whitening_path)
-        calc_density_try_count = len([dir for dir in dir_list if os.path.isdir(os.path.join(self.whitening_path, dir))])
-        self.target_density = (9-calc_density_try_count)*10
-
+        self.whitening_path = f"{self.base_path}/whitening"
+        self.reduct_path = f"{self.whitening_path}/reduct{self.reduct}"
+        
         with open(f"{self.base_path}/classes.txt", "r") as f:
             self.classes = [line.rstrip() for line in f.readlines()]
 
     send_success = pyqtSignal()
+    send_data_num = pyqtSignal(int, int)
     def calc_densities(self):
-        if self.target_density <= 0:
+        if self.reduct <= 0:
             return
+        
+        if os.path.exists(self.reduct_path):
+            shutil.rmtree(self.reduct_path)
+        os.mkdir(self.reduct_path)
+
         last_data_list = f"{self.iter_path}/data_deleted_with_score.txt"
         density_list = []#["Whitening-Indicators path final_score class_density object_size_density deleting_score\n"]
         with open (last_data_list, 'r') as f:
@@ -45,16 +47,17 @@ class CalcDensities(QObject):
                 final_score = float(deleting_score)*((0.5*class_density)+(0.5*object_size_density))
                 density_list.append((file_name, final_score, class_density, object_size_density, float(deleting_score)))
         sorted_density_list = sorted(density_list[1:],key=lambda x: x[1], reverse=True)
-        target_data_cnt = int(len(sorted_density_list)*self.target_density)
-        sorted_density_list = sorted_density_list[:target_data_cnt]
-        density_result_txt = f"{self.whitening_path}/try{self.target_density}.txt"
+        data_cnt = len(sorted_density_list)
+        target_data_cnt = int(float(len(sorted_density_list))*float(float(self.reduct)/100.0))
+        density_result_txt = f"{self.reduct_path}/whitening_result.txt"
         with open(density_result_txt, 'w') as f:
             f.write("path final_score class_density object_size_density deleting_score\n")
             for sdl in sorted_density_list:
-                sdl_str = "\t".join(str(x) for x in sdl)
-                f.write(sdl_str+"\n")
+                sdl_str = f"{sdl[0]} {sdl[1]} {sdl[2]} {sdl[3]} {sdl[4]}\n"
+                f.write(sdl_str)
         
         self.send_success.emit()
+        self.send_data_num.emit(data_cnt, target_data_cnt)
     
     def set_variance_list(self, lines):
         #TODO: Get Class Each Noramalized Std Deviation number's list

@@ -1,0 +1,18 @@
+{
+    "Dataset": "KITTI",
+    "Reduct90": {
+        "NumOfData": 419,
+        "NumOfReduct": 377,
+        "Accuracy": 64.23
+    },
+    "Reduct80": {
+        "NumOfData": 419,
+        "NumOfReduct": 335,
+        "Accuracy": 64.99
+    },
+    "Reduct70": {
+        "NumOfData": 419,
+        "NumOfReduct": 293,
+        "Accuracy": 64.89
+    }
+}

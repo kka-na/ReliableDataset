@@ -75,9 +75,7 @@ class DataSetting(QObject):
         check_and_make(f"./training/configs/{self.dataset_name}")
         check_and_make(f"./training/output/{self.dataset_name}")
         check_and_make(f"{self.base_path}/whitening/")
-
-        with open(f"{self.base_path}/classes.txt", "r") as f:
-            self.classes = [line.rstrip() for line in f.readlines()]
+        
         if self.iter == "1":
             image_paths = []
             for ext in extensions:
@@ -93,6 +91,9 @@ class DataSetting(QObject):
     send_data_num = pyqtSignal(str, int)
     send_success = pyqtSignal()
     def data_setting(self):
+        
+        with open(f"{self.base_path}/classes.txt", "r") as f:
+            self.classes = [line.rstrip() for line in f.readlines()]
 
         with open(f"{self.iter_path}/data.txt", "r") as f:
             self.data_list = [line.strip() for line in f]

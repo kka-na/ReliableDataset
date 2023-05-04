@@ -160,8 +160,8 @@ def calc_norm_variance(_list, cnt_factor, norm_factor):
     dev_list = [0.0]*cnt_factor
     for i in range(cnt_factor):
         dev = norm_list[i]-avg
-        dev_list[i] = dev
         dev_sum += pow(dev,2)
+        dev_list[i] = dev*-1 #Change the sign to give sparse objects a higher score
     var = float(dev_sum)/float(cnt_factor) if dev_sum != 0 else 0.0
     std_var = sqrt(var) if var!= 0 else 0.0
     return std_var, dev_list
