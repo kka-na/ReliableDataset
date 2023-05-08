@@ -31,17 +31,20 @@ class TrainSetting():
 
     def get_best_reduct(self):
         path = f"./log/{self.dataset_name}_whitening.json"
-        reduct_list = [100 - 10*n for n in range(1, (100-self.last_reduct)//10 + 1)]
-        maximum_ap = 0
-        best_reduct = 90
-        with open(path, 'r') as f:
-            data = json.load(f)
-            for reduct in reduct_list:
-                if f"Reduct{reduct}" in data:
-                    ap = data[f"Reduct{reduct}"]["Accuracy"]
-                    if ap >= maximum_ap:
-                        maximum_ap = ap
-                        best_reduct = reduct
+        if os.path.exists(path):
+            reduct_list = [100 - 10*n for n in range(1, (100-self.last_reduct)//10 + 1)]
+            maximum_ap = 0
+            best_reduct = 90
+            with open(path, 'r') as f:
+                data = json.load(f)
+                for reduct in reduct_list:
+                    if f"Reduct{reduct}" in data:
+                        ap = data[f"Reduct{reduct}"]["Accuracy"]
+                        if ap >= maximum_ap:
+                            maximum_ap = ap
+                            best_reduct = reduct
+        else:
+            best_reduct = 90
         return best_reduct
 
     def train_setting(self):

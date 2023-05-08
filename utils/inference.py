@@ -24,7 +24,7 @@ class Inference():
         self.iter_path = f"{self.base_path}/cleaning/iter{self.iter}"
         self.data_path = f"{self.base_path}/data/"
         self.sub_list = ['a','b','c']
-        self.gpu = 1
+        self.gpu = 3
         self.cuda_devices = [0,1,2]
 
     
@@ -63,14 +63,14 @@ class Inference():
                     pred_list = [pred_cls, pred_score, pred_cx, pred_cy, pred_w, pred_h]
                     f.writelines(pred_list)
 
-    def multi_process_val(self, _sub):
+    def process_val(self, _sub):
         with tf.device(f'/GPU:{self.cuda_devices[_sub % len(self.cuda_devices)]}'):
             val_path = f"{self.iter_path}/{_sub}_val.txt"
             inferenced_val_path = f"{self.iter_path}/{_sub}/val_inference/"
             os.makedirs(inferenced_val_path, exist_ok=True)
             self.inf_process(_sub, _sub, val_path, inferenced_val_path)
 
-    def multi_process_sub(self, _sub):
+    def process_sub(self, _sub):
         with tf.device(f'/GPU:{self.cuda_devices[_sub % len(self.cuda_devices)]}'):
             train_path = f"{self.iter_path}/{_sub}_train.txt"
             for __sub in self.sub_list:

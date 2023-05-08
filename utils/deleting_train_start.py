@@ -10,7 +10,7 @@ import wandb
 import yaml
 import logging
 
-#os.environ["CUDA_VISIBLE_DEVICES"]="0,1"
+os.environ["CUDA_VISIBLE_DEVICES"]="0,1,2"
 
 def setup(args):
     cfg = get_cfg()
@@ -20,18 +20,27 @@ def setup(args):
     default_setup(cfg, args)
     return cfg
 
-global trainer
+global ap
 def training(cfg, iter, iter_path, subset, data_path):
-    global trainer 
-
-    # train_data = f"iter{iter}_{subset}_train"
-    # val_data = f"iter{iter}_{subset}_val"
-    # register_coco_instances(train_data, {}, f"{iter_path}/{subset}_train.json", data_path)
-    # register_coco_instances(val_data, {}, f"{iter_path}/{subset}_val.json", data_path)
+    train_data = f"iter{iter}_{subset}_train"
+    val_data = f"iter{iter}_{subset}_val"
+    register_coco_instances(train_data, {}, f"{iter_path}/{subset}_train.json", data_path)
+    register_coco_instances(val_data, {}, f"{iter_path}/{subset}_val.json", data_path)
 
     trainer = DefaultTrainer(cfg)
     trainer.resume_or_load(resume=False)
     trainer.train()
+    '''
+    evaluator = COCOEvaluator(cfg.DATASETS.TEST[0], )
+    val_loader = build_detection_test_loader(cfg, cfg.DATASETS.TEST[0])
+    results = trainer.test(cfg, model=trainer.model, evaluators=[evaluator])
+            
+    if subset == 'eval':
+        ap = results['box_proposals']['AR@1000']
+    else:
+        ap = results['bbox']['AP50']
+    return trainer
+    '''
     
 class TrainStart(QObject):
     def __init__(self, info):
@@ -49,7 +58,7 @@ class TrainStart(QObject):
         self.iter_path = f"{self.base_path}/cleaning/iter{self.iter}"
         self.data_path = f"{self.base_path}/data/"
         self.sub_list = ['a','b','c','eval']
-        self.gpu = 1
+        self.gpu = 3
 
     send_success = pyqtSignal()
     send_ap = pyqtSignal(str, float)
@@ -63,24 +72,13 @@ class TrainStart(QObject):
             cfg = setup(args)
             os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
 
-            #cfg_wandb = yaml.safe_load(cfg.dump())
-            #wandb.init( project=f'NLC_{self.dataset_name}_{_sub}', name=f"iter{self.iter}",config=cfg_wandb) 
+            cfg_wandb = yaml.safe_load(cfg.dump())
+            wandb.init( project=f'NLC_{self.dataset_name}_{_sub}', name=f"iter{self.iter}",config=cfg_wandb) 
             
-            launch(training, num_gpus_per_machine=self.gpu, num_machines=1, machine_rank=0, dist_url=args.dist_url, args=(cfg, self.iter, self.iter_path, _sub, self.data_path),)
-            #wandb.finish()
-            
-            global trainer
-            evaluator = COCOEvaluator(cfg.DATASETS.TEST[0], )
-            val_loader = build_detection_test_loader(cfg, cfg.DATASETS.TEST[0])
-            results = trainer.test(cfg, model=trainer.model, evaluators=[evaluator])
-            
-            if _sub == 'eval':
-                ap = results['box_proposals']['AR@1000']
-            else:
-                ap = results['bbox']['AP50']
+            trainers = launch(training, num_gpus_per_machine=self.gpu, num_machines=1, machine_rank=0, dist_url=args.dist_url, args=(cfg, self.iter, self.iter_path, _sub, self.data_path),)
         
-        
-            self.send_ap.emit(_sub, ap)
+            wandb.finish()
+            #self.send_ap.emit(_sub, ap)
 
         self.send_success.emit()
 

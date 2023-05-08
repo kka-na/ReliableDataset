@@ -219,36 +219,23 @@ def get_gt_bbox(gt_path, width, height):
     return gt
 
 
-report = False
 def calc_each_score(iou_thres, gt_path, inf_path, width, height, im):
     gt_bboxes = get_label_list(0,  gt_path,width, height)
     net_bboxes = get_label_list(1,inf_path, width, height)
     ious, checked_gt, checked_net = calc_ious(iou_thres, gt_bboxes, net_bboxes)
     confs = get_confs(net_bboxes, checked_net)
     classes = get_classes(gt_bboxes, checked_gt, ious)
-    test_bbox_gt = []
-    test_bbox_net = []
+
     conf = 0
     correct_cnt = 0
     score_sum = 0 
-    if report:
-        print("GT   INF  Conf  IoU Score")
+
     for i in range(len(confs)):
         conf = confs[i] if classes[i] else 0
         score = conf*float(list(ious[i].values())[0])
         score_sum += score
         correct_cnt += 1
-        if report:
-            if score > 0:
-                test_bbox_gt.append({gt_bboxes[checked_gt[i]]['cls']:gt_bboxes[checked_gt[i]]['bbox']})
-                test_bbox_net.append({net_bboxes[checked_net[i]]['cls']:net_bboxes[checked_net[i]]['bbox']})
-            
-            print(checked_gt[i], gt_bboxes[checked_gt[i]]['cls'], checked_net[i],net_bboxes[checked_net[i]]['cls'], round(confs[i],2), round(list(ious[i].values())[0],2), round(score,2))
-    
-    if report:
-        test_img = get_test_img(im, test_bbox_gt, test_bbox_net)
-        cv2.imshow('test', test_img)
-        cv2.waitKey(0)
+
     return score_sum/(correct_cnt+1e-10)
 
 def calc_score_threshold(gt_path, inf_path, width, height, im=None):

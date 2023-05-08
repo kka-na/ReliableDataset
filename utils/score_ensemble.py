@@ -20,7 +20,7 @@ class ScoreEnsemble(QObject):
     def init_path(self):
         self.base_path = f"/home/kana/Documents/Dataset/{self.dataset_name}"
         self.iter_path = f"{self.base_path}/cleaning/iter{self.iter}"
-        self.data_path = f"{self.base_path}/data/"
+        self.data_path = f"{self.base_path}/data"
         self.sub_list = ['a','b','c']
         self.models = {"a": ("b", "c"), "b": ("a", "c"), "c": ("a", "b")}
 
@@ -29,6 +29,7 @@ class ScoreEnsemble(QObject):
     def score_ensemble(self):
         self.inference.inference()
         score_thresholds = self.calc_score_threshold()
+        #score_thresholds = [0.5439, 0.5409, 0.5819]
         ensembled_score_thresholds = self.calc_ensembled_score_threshold(score_thresholds)
         whole_deleted_number = 0
         for i, _sub in enumerate(self.sub_list):
@@ -113,9 +114,9 @@ class ScoreEnsemble(QObject):
 
         inf_dirs = [inf1_dir, inf2_dir]
         for i, inf_dir in enumerate(inf_dirs):
-            if len(glob.glob(f"{inf_dir}.*txt")) <= len(glob.glob(f"{inf_dirs[1-i]}.*txt")):
-                labels_cnt = len(glob.glob(f"{inf_dir}.*txt"))
-                for inf_path in tqdm(sorted(glob.glob(f"{inf_dir}.*txt"))):
+            if len(glob.glob(f"{inf_dir}/*.txt")) <= len(glob.glob(f"{inf_dirs[1-i]}/*.txt")):
+                labels_cnt = len(glob.glob(f"{inf_dir}/*.txt"))
+                for inf_path in tqdm(sorted(glob.glob(f"{inf_dir}/*.txt"))):
                     file_name = str(os.path.splitext(os.path.basename(inf_path))[0])
                     gt_path = f"{self.data_path}/{file_name}.txt"
                     inf2_path = f"{inf_dirs[1-i]}/{file_name}.txt"
@@ -143,6 +144,7 @@ class ScoreEnsemble(QObject):
 
     def calc_score(self, gt_path, inf1_path, inf2_path, width, height):
         score = 0.0
+
         if os.path.getsize(gt_path) !=0 and os.path.getsize(inf1_path) != 0 and os.path.getsize(inf2_path) != 0 :
             inf1_score = float(calc_module.calc_score(gt_path, inf1_path, width, height))
             inf2_score = float(calc_module.calc_score(gt_path, inf2_path, width, height))

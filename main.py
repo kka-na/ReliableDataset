@@ -141,9 +141,9 @@ class MainWindow(QMainWindow):
                 
 
     def deleting_start(self):
-        if self.ui.radioButton.isChecked():
-            self.dds.create_dir()
-        self.dds.data_setting()
+        # if self.ui.radioButton.isChecked():
+        #     self.dds.create_dir()
+        # self.dds.data_setting()
         self.dtsi.train_setting()
         self.dts.train_start()
         self.se.score_ensemble()

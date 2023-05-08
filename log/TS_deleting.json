@@ -1,0 +1,29 @@
+{
+    "Dataset": "TS",
+    "Iteration4": {
+        "a": {
+            "NumOfData": 0,
+            "NumOfDelete": 0,
+            "Accuracy": 0,
+            "ScoreTh": 54.34
+        },
+        "b": {
+            "NumOfData": 0,
+            "NumOfDelete": 0,
+            "Accuracy": 0,
+            "ScoreTh": 54.23
+        },
+        "c": {
+            "NumOfData": 0,
+            "NumOfDelete": 0,
+            "Accuracy": 0,
+            "ScoreTh": 58.36
+        },
+        "eval": {
+            "NumOfData": 0,
+            "NumOfDelete": 0,
+            "Accuracy": 0,
+            "DeletingRatio": 1.0
+        }
+    }
+}
