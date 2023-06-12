@@ -10,7 +10,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from ui.mainwindow import Ui_MainWindow
-from utils import deleting_data_setting, deleting_train_setting, deleting_train_start, score_ensemble, deleting, check_deleting, calc_densities, whitening_data_setting, whitening_train_setting, whitening_train_start, check_whitening, assurance_train_setting, assurance_train_start
+from utils import assurance_data_setting, assurance_train_setting, assurance_train_start, deleting_data_setting, deleting_train_setting, deleting_train_start, score_ensemble, deleting, check_deleting, calc_densities, whitening_data_setting, whitening_train_setting, whitening_train_start, check_whitening
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -59,9 +59,10 @@ class MainWindow(QMainWindow):
         self.wtsi = whitening_train_setting.TrainSetting(self.info)
         self.wts = whitening_train_start.TrainStart(self.info)
         self.ckw = check_whitening.CheckWhitening(self.info)
+        self.ads = assurance_data_setting.DataSetting(self.info)
         self.atsi = assurance_train_setting.TrainSetting(self.info)
         self.ats = assurance_train_start.TrainStart(self.info)
-
+     
         self.random_samples = []
         self.sample_index = 0
 
@@ -73,6 +74,9 @@ class MainWindow(QMainWindow):
         }
         self.log_reduct = {
             "NumOfData":0, "NumOfReduct":0, "Accuracy":0
+        }
+        self.log_assurance = {
+            "BestReduct":0, "Before_AP1":0,  "Before_AP2":0, "After_AP1":0,  "After_AP2":0
         }
 
         self.set_connect()
@@ -101,10 +105,10 @@ class MainWindow(QMainWindow):
         self.wts.send_ap.connect(self.set_whitening_ap)
         self.ckw.send_random_samples.connect(self.set_random_samples)
         self.ckw.send_success.connect(self.ckw_success)
-        self.ats.send_success.connect(self.ats_success)
+        self.ads.send_best_reduct.connect(self.set_best_reduct)
+        self.ats.send_success.connect(self.aats_success)
         self.ats.send_ap.connect(self.set_assurance_ap)
-        self.ats.send_best_reduct.connect(self.set_best_reduct)
-
+        
     def set_enabled(self):
         self.ui.startButton.setEnabled(True)
         self.ui.pushButton.setEnabled(True)
@@ -144,7 +148,7 @@ class MainWindow(QMainWindow):
         # if self.ui.radioButton.isChecked():
         #     self.dds.create_dir()
         # self.dds.data_setting()
-        self.dtsi.train_setting()
+        # self.dtsi.train_setting()
         self.dts.train_start()
         self.se.score_ensemble()
         self.d.deleting()
@@ -152,16 +156,19 @@ class MainWindow(QMainWindow):
         self.ckd.check_deleting()
     
     def whitening_start(self):
+        
         self.cd.calc_densities()
         self.wds.data_setting()
         self.wtsi.train_setting()
         self.wts.train_start()
         self.save_log_reduct()
         self.ckw.check_whitening()
-    
+        
     def assurance_start(self):
+        self.ads.data_setting()
         self.atsi.train_setting()
         self.ats.train_start()
+        self.save_log_assurance()
 
     def save_log_iter(self):
         path = f"./log/{self.dataset_name}_deleting.json"
@@ -190,6 +197,13 @@ class MainWindow(QMainWindow):
             log_json = json.dumps(data, ensure_ascii=False, indent=4)
             with open(path, 'w') as f:
                 f.write(log_json)
+    
+    def save_log_assurance(self):
+        path = f"./log/{self.dataset_name}_assurance.json"
+        data = {"Dataset":self.dataset_name, "":self.log_assurance}
+        log_json = json.dumps(data, ensure_ascii=False, indent=4)
+        with open(path, 'w') as f:
+            f.write(log_json)
 
     def do_data_setting(self):
         if self.ui.radioButton.isChecked():
@@ -224,8 +238,10 @@ class MainWindow(QMainWindow):
         self.ckw.check_whitening()
     
     def do_assurance_training(self):
+        self.ads.data_setting()
         self.atsi.train_setting()
         self.ats.train_start()
+        self.save_log_assurance()
 
     @pyqtSlot(str,int)
     def set_data_num(self, sub, num):
@@ -241,15 +257,13 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot(str, float)
     def set_ap(self, sub, ap):
-        def AP(_ap):
-            return str(round(ap*100,2))
-        self.log_iter[f"{sub}"]["Accuracy"]=float(AP(ap))
+        self.log_iter[f"{sub}"]["Accuracy"]=float(str(round(ap,2)))
         if sub == 'a':
-            self.ui.label_13.setText(AP(ap))
+            self.ui.label_13.setText(str(round(ap,2)))
         elif sub == 'b':
-            self.ui.label_23.setText(AP(ap))
+            self.ui.label_23.setText(str(round(ap,2)))
         elif sub == 'c':
-            self.ui.label_18.setText(AP(ap))
+            self.ui.label_18.setText(str(round(ap,2)))
         elif sub == 'eval':
             self.ui.label_36.setText(str(round(ap,2)))
     
@@ -269,12 +283,22 @@ class MainWindow(QMainWindow):
     def set_best_reduct(self, reduct):
         self.ui.label_46.setText(str(reduct))
 
-    @pyqtSlot(str, float)
-    def set_assurance_ap(self, ass, ap):
-        if ass == 'a':
-            self.ui.label_43.setText(str(round(ap,2)))
-        elif ass == 'b':
-            self.ui.label_44.setText(str(round(ap,2)))
+    @pyqtSlot(str, str, float)
+    def set_assurance_ap(self, at, ass, ap):
+        if at == "before":
+            if ass == 'a':
+                self.log_assurance["Before_AP1"]=round(ap,2)
+                self.ui.label_43.setText(str(round(ap,2)))
+            elif ass == 'b':
+                self.log_assurance["Before_AP2"]=round(ap,2)
+                self.ui.label_44.setText(str(round(ap,2)))
+        else:
+            if ass == 'a':
+                self.log_assurance["After_AP1"]=round(ap,2)
+                #self.ui.label_43.setText(str(round(ap,2)))
+            elif ass == 'b':
+                self.log_assurance["After_AP2"]=round(ap,2)
+                #self.ui.label_44.setText(str(round(ap,2)))
     
     @pyqtSlot(str, float)
     def set_score(self, sub, sc):
@@ -367,7 +391,7 @@ class MainWindow(QMainWindow):
         self.ui.pushButton_13.setStyleSheet("QPushButton{color:rgb(255,255,255);background-color:rgb(0,0,0);}")
         QCoreApplication.processEvents()
     @pyqtSlot()
-    def ats_success(self):
+    def aats_success(self):
         self.ui.pushButton_14.setStyleSheet("QPushButton{color:rgb(255,255,255);background-color:rgb(0,0,0);}")
         QCoreApplication.processEvents()
 

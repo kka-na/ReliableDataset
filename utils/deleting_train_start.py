@@ -30,28 +30,25 @@ def training(cfg, iter, iter_path, subset, data_path):
     trainer = DefaultTrainer(cfg)
     trainer.resume_or_load(resume=False)
     trainer.train()
-    '''
+
     evaluator = COCOEvaluator(cfg.DATASETS.TEST[0], )
     val_loader = build_detection_test_loader(cfg, cfg.DATASETS.TEST[0])
     results = trainer.test(cfg, model=trainer.model, evaluators=[evaluator])
-            
-    if subset == 'eval':
-        ap = results['box_proposals']['AR@1000']
-    else:
-        ap = results['bbox']['AP50']
-    return trainer
-    '''
-    
+
+    if len(results)>0:
+        if subset == 'eval':
+            ap = results['box_proposals']['AR@1000']
+        else:
+            ap = results['bbox']['AP50']
+        with open(f"{iter_path}/ap_{subset}.txt", "w") as f:
+            f.write(str(ap))
+
 class TrainStart(QObject):
     def __init__(self, info):
         super(TrainStart, self).__init__()
         self.dataset_name = info[0]
         self.iter = info[1]
         self.init_path() 
-
-        logging.getLogger("detectron2").setLevel(logging.WARNING)
-        logging.getLogger("detectron2").propagate = False
-
 
     def init_path(self):
         self.base_path = f"/home/kana/Documents/Dataset/{self.dataset_name}"
@@ -75,10 +72,16 @@ class TrainStart(QObject):
             cfg_wandb = yaml.safe_load(cfg.dump())
             wandb.init( project=f'NLC_{self.dataset_name}_{_sub}', name=f"iter{self.iter}",config=cfg_wandb) 
             
-            trainers = launch(training, num_gpus_per_machine=self.gpu, num_machines=1, machine_rank=0, dist_url=args.dist_url, args=(cfg, self.iter, self.iter_path, _sub, self.data_path),)
+            launch(training, num_gpus_per_machine=self.gpu, num_machines=1, machine_rank=0, dist_url=args.dist_url, args=(cfg, self.iter, self.iter_path, _sub, self.data_path),)
         
             wandb.finish()
-            #self.send_ap.emit(_sub, ap)
+
+            with open(f"{self.iter_path}/ap_{_sub}.txt", 'r') as f:
+                line = f.readlines()[0]
+                ap = float(line.strip())
+                print(ap)
+
+            self.send_ap.emit(_sub, ap)
 
         self.send_success.emit()
 

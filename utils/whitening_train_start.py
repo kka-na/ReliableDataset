@@ -10,7 +10,7 @@ import wandb
 import yaml
 import logging
 
-#os.environ["CUDA_VISIBLE_DEVICES"]="0,1"
+os.environ["CUDA_VISIBLE_DEVICES"]="0,1,2"
 
 def setup(args):
     cfg = get_cfg()
@@ -20,17 +20,24 @@ def setup(args):
     default_setup(cfg, args)
     return cfg
 
-global trainer
-def training(cfg, reduction, reduct_path, data_path):
-    global trainer
-    # train_data = f"reduct{reduction}_train"
-    # val_data = f"reduct{reduction}_val"
-    # register_coco_instances(train_data, {}, f"{reduct_path}/train.json", data_path)
-    # register_coco_instances(val_data, {}, f"{reduct_path}/val.json", data_path)
+def training(cfg, reduction, reduct_path, reduct_90_path, data_path):
+    
+    train_data = f"reduct{reduction}_train"
+    val_data = "reduct90_val"
+    register_coco_instances(train_data, {}, f"{reduct_path}/train.json", data_path)
+    register_coco_instances(val_data, {}, f"{reduct_90_path}/val.json", data_path)
             
     trainer = DefaultTrainer(cfg)
     trainer.resume_or_load(resume=False)
     trainer.train()
+
+    evaluator = COCOEvaluator(cfg.DATASETS.TEST[0], )
+    val_loader = build_detection_test_loader(cfg, cfg.DATASETS.TEST[0])
+    results = trainer.test(cfg, model=trainer.model, evaluators=[evaluator])
+    if len(results) > 0:
+        ap = results['box_proposals']['AR@1000']
+        with open(f"{reduct_path}/ap.txt", 'w') as f:
+            f.write(str(ap))
     
 class TrainStart(QObject):
     def __init__(self, info):
@@ -50,8 +57,9 @@ class TrainStart(QObject):
         self.class_num = len(classes)
         whitening_path = f"{self.base_path}/whitening"
         self.reduct_path = f"{whitening_path}/reduct{self.reduct}"
+        self.reduct_90_path = f"{whitening_path}/reduct90"
         self.data_path = f"{self.base_path}/data/"
-        self.gpu = 1
+        self.gpu = 3
 
     send_success = pyqtSignal()
     send_ap = pyqtSignal(float)
@@ -64,17 +72,15 @@ class TrainStart(QObject):
         cfg = setup(args)
         os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
 
-        # cfg_wandb = yaml.safe_load(cfg.dump())
-        # wandb.init( project=f'WHT_{self.dataset_name}', name=f"reduct{self.reduct}",config=cfg_wandb) 
+        cfg_wandb = yaml.safe_load(cfg.dump())
+        wandb.init( project=f'WHT_{self.dataset_name}', name=f"reduct{self.reduct}",config=cfg_wandb) 
         
-        launch(training, num_gpus_per_machine=self.gpu, num_machines=1, machine_rank=0, dist_url=args.dist_url, args=(cfg, self.reduct, self.reduct_path, self.data_path),)
-        #wandb.finish()
-        
-        global trainer 
-        evaluator = COCOEvaluator(cfg.DATASETS.TEST[0], )
-        val_loader = build_detection_test_loader(cfg, cfg.DATASETS.TEST[0])
-        results = trainer.test(cfg, model=trainer.model, evaluators=[evaluator])
-        
-        ap = results['box_proposals']['AR@1000']
+        launch(training, num_gpus_per_machine=self.gpu, num_machines=1, machine_rank=0, dist_url=args.dist_url, args=(cfg, self.reduct, self.reduct_path, self.reduct_90_path, self.data_path),)
+        wandb.finish()
+
         self.send_success.emit()
+        with open(f"{self.reduct_path}/ap.txt", 'r') as f:
+            line = f.readlines()[0]
+            ap = float(line.strip())
+            print(ap)
         self.send_ap.emit(ap)

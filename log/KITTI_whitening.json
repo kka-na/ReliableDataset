@@ -1,18 +1,28 @@
 {
     "Dataset": "KITTI",
     "Reduct90": {
-        "NumOfData": 419,
-        "NumOfReduct": 377,
-        "Accuracy": 64.23
+        "NumOfData": 5402,
+        "NumOfReduct": 4861,
+        "Accuracy": 72.95
     },
     "Reduct80": {
-        "NumOfData": 419,
-        "NumOfReduct": 335,
-        "Accuracy": 64.99
+        "NumOfData": 5402,
+        "NumOfReduct": 4321,
+        "Accuracy": 73.71
     },
     "Reduct70": {
-        "NumOfData": 419,
-        "NumOfReduct": 293,
-        "Accuracy": 64.89
+        "NumOfData": 5402,
+        "NumOfReduct": 3781,
+        "Accuracy": 73.96
+    },
+    "Reduct60": {
+        "NumOfData": 5402,
+        "NumOfReduct": 3241,
+        "Accuracy": 73.68
+    },
+    "Reduct50": {
+        "NumOfData": 5402,
+        "NumOfReduct": 2701,
+        "Accuracy": 73.28
     }
 }

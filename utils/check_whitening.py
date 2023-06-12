@@ -32,9 +32,9 @@ class CheckWhitening(QObject):
             lines = f.readlines()
             target_data_cnt = int(float(len(lines))*float(float(self.reduct)/100.0))
             lines = lines[target_data_cnt:]
-            if len(lines) < 4:
+            if len(lines) < 11:
                 return
-            randomlist = random.sample(range(1, len(lines)-1), 3)
+            randomlist = random.sample(range(1, len(lines)-1), 10)
             for i in randomlist: 
                 sample_img = self.get_random_results(lines[i].split(' ')[0])
                 random_samples.append(sample_img)

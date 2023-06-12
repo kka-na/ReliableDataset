@@ -1,6 +1,6 @@
 import os 
 import cv2
-from math import sqrt
+from math import sqrt, pow
 from operator import itemgetter
 
 def get_confs(net_bboxes, checked_net):
@@ -106,22 +106,60 @@ def get_bbox_class_cnt_list(file, all_bbox_class):
             value = line.split()
             all_bbox_class[int(value[0])] += 1
 
-def get_bbox_size_category(bbox, width, height):
-    weight = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+def get_bbox_conf_list(bboxes, all_conf):
+    for b in bboxes:
+        all_conf[int(b['cls'])].append(b['conf'])
+
+def get_bbox_sim_list(conf_list):
+    conf = [0.2, 0.4, 0.6, 0.8, 1.0]
+    sim = [ 0 for _ in range(5)]
+    for cl in conf_list:
+        for i in range(len(conf)-1):
+            if conf[i] <= cl < conf[i+1]:
+                sim[i+1] += 1
+    return sim
+
+
+def get_bbox_size_category(bbox, width, height, category):
     calc_box = calc_boxes(bbox[1:], width, height)
-    volume = width*height
     size = calc_box[0]*calc_box[1]
-    size_ind = 1
-    for i in range(1,6):
-        if (volume*weight[i-1]<size) and (size <= volume*weight[i]):
+    size_ind = 0
+    for i in range(len(category)-1):
+        if category[i] <= size < category[i+1]:
             size_ind = i
-    return size_ind - 1
-    
-def get_bbox_size_cnt_list(file, all_bbox_size, width, height):
+            break
+    return size_ind
+
+def get_bbox_size(file, width, height):
+    size = []
     with open(file, 'r') as f:
         lines = f.readlines()
         for line in lines:
-            size_category = get_bbox_size_category(line.split(), width, height)
+            bbox = line.split()
+            calc_box = calc_boxes(bbox[1:], width, height)
+            size.append(calc_box[0]*calc_box[1])
+    return size 
+
+def get_bbox_size_categories(min_size, max_size, num_intervals):
+    interval_size = (max_size - min_size) / (num_intervals - 1)
+    
+    if min_size == 0:
+        interval_list = [0]
+        min_size += interval_size  
+    else:
+        interval_list = []
+    
+    for i in range(num_intervals - 1):
+        interval_list.append(int(min_size))
+        min_size += interval_size
+    return interval_list
+
+def get_bbox_size_cnt_list(file, all_bbox_size, width, height, min_size, max_size, size_num):
+    categories = get_bbox_size_categories(min_size, max_size, size_num)
+    with open(file, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            size_category = get_bbox_size_category(line.split(), width, height, categories)
             all_bbox_size[size_category] += 1
 
 
@@ -153,11 +191,11 @@ def calc_norm_variance(_list, cnt_factor, norm_factor):
         cnt_sum += _list[i]
     avg = cnt_sum/float(cnt_factor) if cnt_sum != 0 else 0.0
     avg = avg/float(norm_factor) if avg != 0 else 0.0
-    norm_list = [0.0]*cnt_factor
+    norm_list = [ 0.0 for _ in range(cnt_factor)]
     for i in range(cnt_factor):
         norm_list[i] = float(_list[i])/float(norm_factor) if _list[i] != 0 else 0.0
     dev_sum = 0.0
-    dev_list = [0.0]*cnt_factor
+    dev_list = [ 0.0 for _ in range(cnt_factor)]
     for i in range(cnt_factor):
         dev = norm_list[i]-avg
         dev_sum += pow(dev,2)
@@ -167,15 +205,16 @@ def calc_norm_variance(_list, cnt_factor, norm_factor):
     return std_var, dev_list
 
 def calc_z_score(cnt_factor, std_var, dev_list):
-    z_scores = [0.0]*cnt_factor
+    z_scores = [ 0.0 for _ in range(cnt_factor)]
     for i in range(cnt_factor):
         z_scores[i] = float(dev_list[i]/std_var)
     return z_scores
 
 def get_color(_cls): #BGR, Pastel Rainbow Colors
+    idx = int(_cls)%10
     colors = [[179,119,153],[184,137,216],[171,152,237],[142,184,243],[142,214,247],
                 [161,249,250],[150,221,195],[192,211,154],[225,209,140],[223,183,141]]
-    return colors[int(_cls)]
+    return colors[idx]
 
 def get_result(image, arr, classes):
     image_cp = image.copy()
@@ -217,6 +256,14 @@ def get_gt_bbox(gt_path, width, height):
     for i in range(len(gt_bboxes)):
         gt.append({gt_bboxes[i]['cls']:gt_bboxes[i]['bbox']})
     return gt
+
+
+def get_net_bbox(net_path, width, height):
+    net_bboxes = get_label_list(1, net_path, width, height)
+    net = []
+    for i in range(len(net_bboxes)):
+        net.append({net_bboxes[i]['cls']:net_bboxes[i]['bbox']})
+    return net
 
 
 def calc_each_score(iou_thres, gt_path, inf_path, width, height, im):

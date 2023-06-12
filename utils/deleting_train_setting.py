@@ -52,7 +52,7 @@ class TrainSetting():
         cfg.DATASETS.TRAIN=(train_data,)
         cfg.DATASETS.TEST=(val_data,)
         cfg.TEST.EVAL_PERIOD = 500
-        cfg.DATALOADER.NUM_WORKERS = 8
+        cfg.DATALOADER.NUM_WORKERS = 12
         cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(f"COCO-Detection/{model_name}")
         cfg.SOLVER.IMS_PER_BATCH = 12
         cfg.SOLVER.BASE_LR = 0.01

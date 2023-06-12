@@ -13,7 +13,7 @@ class Deleting(QObject):
     def init_path(self):
         self.base_path = f"/home/kana/Documents/Dataset/{self.dataset_name}"
         self.iter_path = f"{self.base_path}/cleaning/iter{self.iter}"
-        self.data_path = f"{self.base_path}/data/"
+        self.data_path = f"{self.base_path}/data"
         self.sub_list = ['a','b','c']
 
     send_success = pyqtSignal()
@@ -35,27 +35,31 @@ class Deleting(QObject):
                         img = f"{self.data_path}/{name}.png"
                     f_pre_list.discard(img)
         
-                
         with open(f"{self.iter_path}/data_deleted.txt", 'w') as f_aft:
             for n in f_pre_list:
                 f_aft.write("%s\n"%n)
 
 
+        
         score_list = []
         for _sub in self.sub_list:
             file = f"{self.iter_path}/{_sub}/filtering_score_list.txt"
+            
+            score_dict = {}
+
             with open(file, 'r') as f:
-                lines = f.readlines()
+                lines = f.readlines()[1:]
                 for line in lines:
-                    name = line.split(' ')[0]
-                    score = line.split(' ')[1]
-                    for file_path in f_pre_list:
-                        f_name = (file_path.split('/')[-1]).split('.')[0]
-                        if name == f_name:
-                            score_list.append(f"{name} {score}")
+                    key, value = line.strip().split(' ')
+                    score_dict[key] = value
+                for file_path in tqdm(f_pre_list):
+                    name = file_path.rsplit('/', 1)[-1].split('.')[0]
+                    if name in score_dict:
+                        score_list.append(f"{name} {score_dict[name]}")
+
         with open(f"{self.iter_path}/data_deleted_with_score.txt", 'w') as f_aft:
-            for n in score_list:
-                f_aft.write("%s"%n)
+            for n in tqdm(score_list):
+                f_aft.write("%s\n"%n)
 
         after_len = len(f_pre_list)
         deleting_ratio = float(after_len/before_len)

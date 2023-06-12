@@ -1,0 +1,28 @@
+{
+    "Dataset": "TS",
+    "Reduct90": {
+        "NumOfData": 147321,
+        "NumOfReduct": 0,
+        "Accuracy": 59.52
+    },
+    "Reduct80": {
+        "NumOfData": 147321,
+        "NumOfReduct": 103124,
+        "Accuracy": 59.46
+    },
+    "Reduct70": {
+        "NumOfData": 147321,
+        "NumOfReduct": 103124,
+        "Accuracy": 59.55
+    },
+    "Reduct60": {
+        "NumOfData": 147321,
+        "NumOfReduct": 88392,
+        "Accuracy": 59.49
+    },
+    "Reduct50": {
+        "NumOfData": 147321,
+        "NumOfReduct": 73660,
+        "Accuracy": 59.37
+    }
+}

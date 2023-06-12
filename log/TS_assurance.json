@@ -1,0 +1,10 @@
+{
+    "Dataset": "TS",
+    "": {
+        "BestReduct": 0,
+        "Before_AP1": 62.32,
+        "Before_AP2": 65.9,
+        "After_AP1": 66.48,
+        "After_AP2": 70.07
+    }
+}

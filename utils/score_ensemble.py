@@ -27,7 +27,8 @@ class ScoreEnsemble(QObject):
     send_deleted = pyqtSignal(str, int)
     send_success = pyqtSignal()
     def score_ensemble(self):
-        self.inference.inference()
+        #self.inference.inference()
+        
         score_thresholds = self.calc_score_threshold()
         #score_thresholds = [0.5439, 0.5409, 0.5819]
         ensembled_score_thresholds = self.calc_ensembled_score_threshold(score_thresholds)

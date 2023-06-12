@@ -56,25 +56,25 @@
         "a": {
             "NumOfData": 153,
             "NumOfDelete": 0,
-            "Accuracy": 0.38,
+            "Accuracy": 38.0,
             "ScoreTh": 0.0
         },
         "b": {
             "NumOfData": 153,
             "NumOfDelete": 0,
-            "Accuracy": 93.67,
+            "Accuracy": 9367.0,
             "ScoreTh": 0.0
         },
         "c": {
             "NumOfData": 154,
             "NumOfDelete": 0,
-            "Accuracy": 293.38,
+            "Accuracy": 29338.0,
             "ScoreTh": 0.0
         },
         "eval": {
             "NumOfData": 577,
             "NumOfDelete": 0,
-            "Accuracy": 6144.19,
+            "Accuracy": 614419.0,
             "DeletingRatio": 1.0
         }
     },

@@ -22,6 +22,7 @@ class TrainSetting():
         self.class_num = len(classes)
         whitening_path = f"{self.base_path}/whitening"
         self.reduct_path = f"{whitening_path}/reduct{self.reduct}"
+        self.reduct_90_path = f"{whitening_path}/reduct90"
         self.data_path = f"{self.base_path}/data/"
         self.type_list = ['train', 'val']
         self.model = 'rpn_R_50_FPN_1x.yaml'
@@ -29,9 +30,9 @@ class TrainSetting():
 
     def train_setting(self):
         train_data = f"reduct{self.reduct}_train"
-        val_data = f"reduct{self.reduct}_val"
+        val_data = "reduct90_val"
         register_coco_instances(train_data, {}, f"{self.reduct_path}/train.json", self.data_path)
-        register_coco_instances(val_data, {}, f"{self.reduct_path}/val.json", self.data_path)
+        register_coco_instances(val_data, {}, f"{self.reduct_90_path}/val.json", self.data_path)
         
         cfg_file = self.get_cfg_file(self.model, train_data, val_data)
 
@@ -44,11 +45,11 @@ class TrainSetting():
         cfg.DATASETS.TRAIN=(train_data,)
         cfg.DATASETS.TEST=(val_data,)
         cfg.TEST.EVAL_PERIOD = 500
-        cfg.DATALOADER.NUM_WORKERS = 8
+        cfg.DATALOADER.NUM_WORKERS = 12
         cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(f"COCO-Detection/{model_name}")
-        cfg.SOLVER.IMS_PER_BATCH = 2
-        cfg.SOLVER.BASE_LR = 0.1
-        cfg.SOLVER.MAX_ITER = 20#5000
+        cfg.SOLVER.IMS_PER_BATCH = 12
+        cfg.SOLVER.BASE_LR = 0.01
+        cfg.SOLVER.MAX_ITER = 5000
         cfg.SOLVER.STEPS = []
         cfg.SOLVER.LR_SCHEDULER_NAME="WarmupCosineLR"
         cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 256

@@ -1,28 +1,28 @@
 {
-    "Dataset": "TS",
-    "Iteration4": {
+    "Dataset": "WAYMO",
+    "Iteration2": {
         "a": {
             "NumOfData": 0,
             "NumOfDelete": 0,
-            "Accuracy": 0.0,
-            "ScoreTh": 543400.0
+            "Accuracy": 0,
+            "ScoreTh": 0
         },
         "b": {
             "NumOfData": 0,
             "NumOfDelete": 0,
-            "Accuracy": 0.0,
-            "ScoreTh": 542300.0
+            "Accuracy": 0,
+            "ScoreTh": 0
         },
         "c": {
             "NumOfData": 0,
             "NumOfDelete": 0,
-            "Accuracy": 0.0,
-            "ScoreTh": 583600.0
+            "Accuracy": 0,
+            "ScoreTh": 0
         },
         "eval": {
             "NumOfData": 0,
             "NumOfDelete": 0,
-            "Accuracy": 0.0,
+            "Accuracy": 0,
             "DeletingRatio": 1.0
         }
     }

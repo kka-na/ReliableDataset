@@ -1,0 +1,10 @@
+{
+    "Dataset": "KITTI",
+    "": {
+        "BestReduct": 0,
+        "Before_AP1": 88.9,
+        "Before_AP2": 90.79,
+        "After_AP1": 84.42,
+        "After_AP2": 83.74
+    }
+}

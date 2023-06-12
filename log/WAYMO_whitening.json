@@ -1,0 +1,23 @@
+{
+    "Dataset": "WAYMO",
+    "Reduct90": {
+        "NumOfData": 5001,
+        "NumOfReduct": 4500,
+        "Accuracy": 46.75
+    },
+    "Reduct80": {
+        "NumOfData": 5001,
+        "NumOfReduct": 4000,
+        "Accuracy": 47.15
+    },
+    "Reduct70": {
+        "NumOfData": 5001,
+        "NumOfReduct": 3500,
+        "Accuracy": 47.06
+    },
+    "Reduct60": {
+        "NumOfData": 5001,
+        "NumOfReduct": 3000,
+        "Accuracy": 46.64
+    }
+}
