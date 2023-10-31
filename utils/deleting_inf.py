@@ -19,10 +19,10 @@ dataset_name = str(sys.argv[1])
 iter_num = int(sys.argv[2])
 modelset = str(sys.argv[3])
 subset = str(sys.argv[4])
-iter_path = f"{base_path}/{dataset_name}/cleaning/iter{iter_num}"
+iter_path = f"{base_path}/{dataset_name}/deleting/iter{iter_num}"
 
 if modelset == subset:
-    target_path = f"{base_path}/{dataset_name}/cleaning/iter1/{modelset}_val.txt"
+    target_path = f"{base_path}/{dataset_name}/deleting/iter1/{modelset}_val.txt"
     inference_path = f"{iter_path}/{modelset}/val_inference/"
 else:
     target_path = f"{iter_path}/{modelset}_train.txt"

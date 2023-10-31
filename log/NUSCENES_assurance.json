@@ -1,0 +1,10 @@
+{
+    "Dataset": "NUSCENES",
+    "": {
+        "BestReduct": 0,
+        "Before_AP1": 77.51,
+        "Before_AP2": 78.94,
+        "After_AP1": 78.37,
+        "After_AP2": 77.8
+    }
+}

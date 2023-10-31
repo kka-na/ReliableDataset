@@ -86,12 +86,12 @@ def get_bbox_class_list(file):
         class_list = [line.split()[0] for line in f.readlines()]
     return class_list
 
-def get_bbox_size_list(file, width, height):
+def get_bbox_size_list(file, width, height, categories):
     size_list = []
     with open(file, 'r') as f:
         lines = f.readlines()
         for line in lines:
-            size_list.append(get_bbox_size_category(line.split(), width, height))
+            size_list.append(get_bbox_size_category(line.split(), width, height, categories))
     return size_list
 
 def get_bbox_cnt(file):
@@ -141,21 +141,16 @@ def get_bbox_size(file, width, height):
     return size 
 
 def get_bbox_size_categories(min_size, max_size, num_intervals):
-    interval_size = (max_size - min_size) / (num_intervals - 1)
+    interval_size = (max_size - min_size) / num_intervals
     
-    if min_size == 0:
-        interval_list = [0]
-        min_size += interval_size  
-    else:
-        interval_list = []
+    interval_list = []
     
-    for i in range(num_intervals - 1):
+    for i in range(num_intervals + 1):
         interval_list.append(int(min_size))
         min_size += interval_size
     return interval_list
 
-def get_bbox_size_cnt_list(file, all_bbox_size, width, height, min_size, max_size, size_num):
-    categories = get_bbox_size_categories(min_size, max_size, size_num)
+def get_bbox_size_cnt_list(file, all_bbox_size, width, height, categories):
     with open(file, 'r') as f:
         lines = f.readlines()
         for line in lines:

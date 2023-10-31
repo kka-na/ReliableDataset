@@ -5,8 +5,8 @@ iter_num = 0
 subset = "c"
 from_subst = "b"
 
-#path = "/home/kana/Documents/Dataset/TS/2DOD/organized/cleaning/iter{}/{}/val/inference/".format(iter_num, subset)
-path = "/home/kana/Documents/Dataset/TS/2DOD/organized/cleaning/iter{}/{}/train/inference_{}/".format(iter_num, subset, from_subst)
+#path = "/home/kana/Documents/Dataset/TS/2DOD/organized/deleting/iter{}/{}/val/inference/".format(iter_num, subset)
+path = "/home/kana/Documents/Dataset/TS/2DOD/organized/deleting/iter{}/{}/train/inference_{}/".format(iter_num, subset, from_subst)
 
 w = 1920
 h = 1080

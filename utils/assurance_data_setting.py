@@ -13,7 +13,7 @@ class DataSetting(QObject):
     
     def init_path(self):
         self.base_path = f"/home/kana/Documents/Dataset/{self.dataset_name}"
-        self.iter_path = f"{self.base_path}/cleaning/iter1"
+        self.iter_path = f"{self.base_path}/deleting/iter1"
         whitening_path = f"{self.base_path}/whitening"
         self.reduct = self.get_best_reduct()
         self.reduct_path = f"{whitening_path}/reduct{self.reduct}"

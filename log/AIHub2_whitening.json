@@ -1,0 +1,28 @@
+{
+    "Dataset": "AIHub2",
+    "Reduct90": {
+        "NumOfData": 38970,
+        "NumOfReduct": 35073,
+        "Accuracy": 67.82
+    },
+    "Reduct80": {
+        "NumOfData": 38970,
+        "NumOfReduct": 31176,
+        "Accuracy": 68.05
+    },
+    "Reduct70": {
+        "NumOfData": 38970,
+        "NumOfReduct": 27279,
+        "Accuracy": 67.98
+    },
+    "Reduct60": {
+        "NumOfData": 38970,
+        "NumOfReduct": 23382,
+        "Accuracy": 67.99
+    },
+    "Reduct50": {
+        "NumOfData": 38970,
+        "NumOfReduct": 19485,
+        "Accuracy": 67.78
+    }
+}

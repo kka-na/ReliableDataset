@@ -21,8 +21,8 @@ iter_num = int(sys.argv[2])
 modelset = str(sys.argv[3])
 subset = str(sys.argv[4])
 
-train_path = base_path+"/{}/cleaning/iter{}/{}_train.txt".format(dataset_name, iter_num, modelset)
-inference_path = base_path+"/{}/cleaning/iter{}/{}/inference_{}/".format(dataset_name, iter_num, modelset, subset)
+train_path = base_path+"/{}/deleting/iter{}/{}_train.txt".format(dataset_name, iter_num, modelset)
+inference_path = base_path+"/{}/deleting/iter{}/{}/inference_{}/".format(dataset_name, iter_num, modelset, subset)
 os.makedirs(inference_path, exist_ok=True)
 
 

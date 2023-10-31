@@ -1,0 +1,10 @@
+{
+    "Dataset": "AIHub1",
+    "": {
+        "BestReduct": 0,
+        "Before_AP1": 51.67,
+        "Before_AP2": 54.81,
+        "After_AP1": 53.94,
+        "After_AP2": 57.6
+    }
+}

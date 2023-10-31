@@ -1,0 +1,28 @@
+{
+    "Dataset": "NUSCENES",
+    "Reduct90": {
+        "NumOfData": 2118,
+        "NumOfReduct": 1906,
+        "Accuracy": 60.26
+    },
+    "Reduct80": {
+        "NumOfData": 2118,
+        "NumOfReduct": 1694,
+        "Accuracy": 62.64
+    },
+    "Reduct70": {
+        "NumOfData": 2118,
+        "NumOfReduct": 1482,
+        "Accuracy": 62.59
+    },
+    "Reduct60": {
+        "NumOfData": 2118,
+        "NumOfReduct": 1270,
+        "Accuracy": 62.08
+    },
+    "Reduct50": {
+        "NumOfData": 2118,
+        "NumOfReduct": 1059,
+        "Accuracy": 60.96
+    }
+}

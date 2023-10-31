@@ -19,8 +19,8 @@ dataset_name = str(sys.argv[1])
 iter_num = int(sys.argv[2])
 modelset = str(sys.argv[3])
 
-val_path = base_path+"/{}/cleaning/iter1/{}_val.txt".format(dataset_name, modelset)
-inference_val_path = base_path+"/{}/cleaning/iter{}/{}/val_inference/".format(dataset_name, iter_num, modelset)
+val_path = base_path+"/{}/deleting/iter1/{}_val.txt".format(dataset_name, modelset)
+inference_val_path = base_path+"/{}/deleting/iter{}/{}/val_inference/".format(dataset_name, iter_num, modelset)
 os.makedirs(inference_val_path, exist_ok=True)
 
 def init_cfg():               

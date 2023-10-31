@@ -11,11 +11,11 @@ class Cleaning():
     def set_values(self):
         self.base_path = "/home/kana/Documents/Dataset/{}".format(self.dataset_name)
         self.data_path =  "{}/data".format(self.base_path)
-        self.iter_path = "{}/cleaning/iter{}".format(self.base_path, self.iter)
+        self.iter_path = "{}/deleting/iter{}".format(self.base_path, self.iter)
         self.cleaning_list = []
-        self.cleaning_list.append("{}/{}/cleaning_list.txt".format(self.iter_path, "a"))
-        self.cleaning_list.append("{}/{}/cleaning_list.txt".format(self.iter_path, "b"))
-        self.cleaning_list.append("{}/{}/cleaning_list.txt".format(self.iter_path, "c"))
+        self.cleaning_list.append("{}/{}/deleting_list.txt".format(self.iter_path, "a"))
+        self.cleaning_list.append("{}/{}/deleting_list.txt".format(self.iter_path, "b"))
+        self.cleaning_list.append("{}/{}/deleting_list.txt".format(self.iter_path, "c"))
 
     def cleaning(self):
         self.set_values()

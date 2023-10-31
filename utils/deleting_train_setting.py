@@ -20,7 +20,7 @@ class TrainSetting():
         with open(f"{self.base_path}/classes.txt", "r") as f:
             classes = [line.rstrip() for line in f.readlines()]
         self.class_num = len(classes)
-        self.iter_path = f"{self.base_path}/cleaning/iter{self.iter}"
+        self.iter_path = f"{self.base_path}/deleting/iter{self.iter}"
         self.data_path = f"{self.base_path}/data/"
         self.sub_list = ['a','b','c','eval']
         self.type_list = ['train', 'val']

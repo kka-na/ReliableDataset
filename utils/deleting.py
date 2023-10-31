@@ -12,7 +12,7 @@ class Deleting(QObject):
 
     def init_path(self):
         self.base_path = f"/home/kana/Documents/Dataset/{self.dataset_name}"
-        self.iter_path = f"{self.base_path}/cleaning/iter{self.iter}"
+        self.iter_path = f"{self.base_path}/deleting/iter{self.iter}"
         self.data_path = f"{self.base_path}/data"
         self.sub_list = ['a','b','c']
 

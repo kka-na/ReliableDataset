@@ -20,7 +20,7 @@ iter_num = int(sys.argv[2])
 subset = str(sys.argv[3])
 base_path = "/home/kana/Documents/Dataset/{}".format(dataset_name)
 data_path = base_path+"data/"
-iter_path = base_path+"cleaning/iter{}/".format(iter_num)
+iter_path = base_path+"deleting/iter{}/".format(iter_num)
 train_data = "iter{}_{}_train".format(iter_num, subset)
 val_data = "iter{}_{}_val".format(iter_num, subset)
 

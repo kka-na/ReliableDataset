@@ -17,11 +17,11 @@ img = sorted(glob.glob(base+"data/*.jpg"))
 label = sorted(glob.glob(base+"label/*.txt"))
 
 # Move them to train, valid folders
-eval_folder = base+'cleaning/iter{}/eval/'.format(iter_num)
+eval_folder = base+'deleting/iter{}/eval/'.format(iter_num)
 
 os.makedirs(eval_folder, exist_ok=True)
 
-os.makedirs(base+'cleaning/iter{}/eval/data/'.format(iter_num), exist_ok=True)
+os.makedirs(base+'deleting/iter{}/eval/data/'.format(iter_num), exist_ok=True)
 
 def move(paths, folder):
     for p in paths:

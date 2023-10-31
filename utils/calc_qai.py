@@ -38,24 +38,37 @@ class CalcQAI():
             max_bbox_size = 0
             all_gt_bbox_size =[ 0 for _ in range(size_num)]
 
+
+            width  = 0
+            height = 0
+
             for t, i in zip(txts, imgs): 
                 txt_file = f"{self.data_path}/{t}"
                 all_gt_bbox_count += calc_module.get_bbox_cnt(txt_file)
                 calc_module.get_bbox_class_cnt_list(txt_file, all_gt_bbox_class)
-                with io.open(f"{self.data_path}/{i}", 'rb') as fobj:
-                    width,height = get_size(fobj)
+                try:
+                    with io.open(f"{self.data_path}/{i}", 'rb') as fobj:
+                        width,height = get_size(fobj)
+                except:
+                    pass
                 bbox_sizes = calc_module.get_bbox_size(txt_file, width, height)
                 for bs in bbox_sizes:
                     if bs < min_bbox_size:
                         min_bbox_size = bs
                     elif bs > max_bbox_size:
                         max_bbox_size = bs
+            self.bbox_size_categories = calc_module.get_bbox_size_categories(min_bbox_size, max_bbox_size, size_num)
+
 
             for t,i in zip(txts, imgs):
+                
                 txt_file = f"{self.data_path}/{t}"
-                with io.open(f"{self.data_path}/{i}", 'rb') as fobj:
-                  width,height = get_size(fobj)
-                calc_module.get_bbox_size_cnt_list(txt_file, all_gt_bbox_size, width, height,min_bbox_size, max_bbox_size, size_num)
+                try:
+                    with io.open(f"{self.data_path}/{i}", 'rb') as fobj:
+                        width,height = get_size(fobj)
+                except:
+                    pass
+                calc_module.get_bbox_size_cnt_list(txt_file, all_gt_bbox_size, width, height,self.bbox_size_categories)
        
             class_var, _ = calc_module.calc_norm_variance(all_gt_bbox_class, class_num, all_gt_bbox_count)
             obj_size_var, _ = calc_module.calc_norm_variance(all_gt_bbox_size, size_num, all_gt_bbox_count)
@@ -63,9 +76,14 @@ class CalcQAI():
             bbox_acc1, bbox_acc2 = 0,0
             all_a_conf_list = [ [0] for _ in range(class_num)]
             all_b_conf_list = [ [0] for _ in range(class_num)]
+            w = 0
+            h = 0
             for t,i in zip(txts, imgs):
-                with io.open(f"{self.data_path}/{i}", 'rb') as fobj:
-                  w,h = get_size(fobj)
+                try:
+                    with io.open(f"{self.data_path}/{i}", 'rb') as fobj:
+                        w,h = get_size(fobj)
+                except:
+                    pass
                 val_a = f"{self.assurance_path}/{_at}_by_a/{t}"
                 val_b = f"{self.assurance_path}/{_at}_by_b/{t}"
                 val_gt = f"{self.data_path}/{t}"

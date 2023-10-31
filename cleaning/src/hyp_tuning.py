@@ -22,7 +22,7 @@ import yaml
 import wandb
 wandb.login()
 
-base_path = "/home/kana/Documents/Dataset/TS/2DOD/organized/cleaning/"
+base_path = "/home/kana/Documents/Dataset/TS/2DOD/organized/deleting/"
 
 if len(sys.argv) != 3 :
     print("[Usage]: python3 hyp_tuning.py iter# subset#")

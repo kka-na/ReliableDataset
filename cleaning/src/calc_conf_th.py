@@ -18,7 +18,7 @@ class CalcConfTh():
         self.dataset_name = "TS"
 
     def calc_threshold(self):
-        self.inference_path = "{}/{}/cleaning/iter{}/{}/val_inference/".format(self.base_path, self.dataset_name, self.iter, self.subset)
+        self.inference_path = "{}/{}/deleting/iter{}/{}/val_inference/".format(self.base_path, self.dataset_name, self.iter, self.subset)
 
         mconf_sum = 0.0
         miou_sum = 0.0
@@ -56,7 +56,7 @@ class CalcConfTh():
         # Second Experiments
         average_score = score_sum / ( frame_cnt + 1e-10 )
 
-        log_path = "{}/{}/cleaning/iter{}/{}/log_iter{}.txt".format(self.base_path, self.dataset_name, self.iter, self.subset, self.iter)
+        log_path = "{}/{}/deleting/iter{}/{}/log_iter{}.txt".format(self.base_path, self.dataset_name, self.iter, self.subset, self.iter)
         now_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S ')
         if os.path.isfile(log_path): 
             f = open(log_path, 'a')

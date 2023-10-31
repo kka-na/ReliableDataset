@@ -13,7 +13,7 @@ class CheckDeleting(QObject):
 
     def init_path(self):
         self.base_path = f"/home/kana/Documents/Dataset/{self.dataset_name}"
-        self.iter_path = f"{self.base_path}/cleaning/iter{self.iter}"
+        self.iter_path = f"{self.base_path}/deleting/iter{self.iter}"
         self.data_path = f"{self.base_path}/data"
         self.sub_list = ['a','b','c']
         self.models = {"a": ("b", "c"), "b": ("a", "c"), "c": ("a", "b")}
@@ -63,6 +63,6 @@ class CheckDeleting(QObject):
         return_image = cv2.cvtColor(gt_image, cv2.COLOR_BGR2RGB)
         save_path = f"{self.sample_path}/{file_name}.{ext}"
         concat_img = cv2.hconcat([gt_image, net1_image, net2_image])
-        concat_img = cv2.resize(concat_img, (int(concat_img.shape[1]/2), int(concat_img.shape[0]/2)),interpolation = cv2.INTER_AREA)
+        #concat_img = cv2.resize(concat_img, (int(concat_img.shape[1]/2), int(concat_img.shape[0]/2)),interpolation = cv2.INTER_AREA)
         cv2.imwrite(save_path, concat_img)
         return return_image

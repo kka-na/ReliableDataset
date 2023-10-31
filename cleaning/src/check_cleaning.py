@@ -26,9 +26,9 @@ class CheckCleaning():
             self.target2 = "b"
 
         self.base_path = "/home/kana/Documents/Dataset/{}".format(self.dataset_name)
-        self.data_train_path = self.base_path+"/cleaning/iter{}/{}/".format(self.iter, self.subset)
-        self.cleaning_txt = self.data_train_path+"cleaning_list.txt"
-        self.cleaning_sample_path = self.base_path+"/cleaning_sample/iter{}/".format(self.iter)
+        self.data_train_path = self.base_path+"/deleting/iter{}/{}/".format(self.iter, self.subset)
+        self.cleaning_txt = self.data_train_path+"deleting_list.txt"
+        self.cleaning_sample_path = self.base_path+"/deleting_sample/iter{}/".format(self.iter)
 
 
         os.makedirs(self.cleaning_sample_path, exist_ok=True)

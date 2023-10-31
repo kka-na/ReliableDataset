@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 base = "/home/kana/Documents/Dataset/TS/2DOD/organized/"
-data = base+"cleaning/iter1/eval/data/"
+data = base+"deleting/iter1/eval/data/"
 
 img = sorted(glob.glob(data+"*.jpg"))
 label = sorted(glob.glob(data+"*.txt"))

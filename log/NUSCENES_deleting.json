@@ -1,0 +1,107 @@
+{
+    "Dataset": "NUSCENES",
+    "Iteration1": {
+        "a": {
+            "NumOfData": 900,
+            "NumOfDelete": 286,
+            "Accuracy": 71.01,
+            "ScoreTh": 50.19
+        },
+        "b": {
+            "NumOfData": 900,
+            "NumOfDelete": 250,
+            "Accuracy": 70.53,
+            "ScoreTh": 50.16
+        },
+        "c": {
+            "NumOfData": 900,
+            "NumOfDelete": 276,
+            "Accuracy": 72.79,
+            "ScoreTh": 52.28
+        },
+        "eval": {
+            "NumOfData": 3376,
+            "NumOfDelete": 812,
+            "Accuracy": 59.19,
+            "DeletingRatio": 0.88
+        }
+    },
+    "Iteration2": {
+        "a": {
+            "NumOfData": 792,
+            "NumOfDelete": 130,
+            "Accuracy": 67.4,
+            "ScoreTh": 52.19
+        },
+        "b": {
+            "NumOfData": 792,
+            "NumOfDelete": 112,
+            "Accuracy": 68.18,
+            "ScoreTh": 54.3
+        },
+        "c": {
+            "NumOfData": 792,
+            "NumOfDelete": 98,
+            "Accuracy": 68.87,
+            "ScoreTh": 55.75
+        },
+        "eval": {
+            "NumOfData": 2970,
+            "NumOfDelete": 340,
+            "Accuracy": 59.31,
+            "DeletingRatio": 0.94
+        }
+    },
+    "Iteration3": {
+        "a": {
+            "NumOfData": 746,
+            "NumOfDelete": 62,
+            "Accuracy": 67.99,
+            "ScoreTh": 53.23
+        },
+        "b": {
+            "NumOfData": 746,
+            "NumOfDelete": 72,
+            "Accuracy": 72.46,
+            "ScoreTh": 52.41
+        },
+        "c": {
+            "NumOfData": 747,
+            "NumOfDelete": 64,
+            "Accuracy": 71.96,
+            "ScoreTh": 53.72
+        },
+        "eval": {
+            "NumOfData": 2800,
+            "NumOfDelete": 198,
+            "Accuracy": 59.37,
+            "DeletingRatio": 0.96
+        }
+    },
+    "Iteration4": {
+        "a": {
+            "NumOfData": 720,
+            "NumOfDelete": 18,
+            "Accuracy": 68.15,
+            "ScoreTh": 52.79
+        },
+        "b": {
+            "NumOfData": 720,
+            "NumOfDelete": 30,
+            "Accuracy": 72.83,
+            "ScoreTh": 51.59
+        },
+        "c": {
+            "NumOfData": 720,
+            "NumOfDelete": 34,
+            "Accuracy": 70.69,
+            "ScoreTh": 53.12
+        },
+        "eval": {
+            "NumOfData": 2701,
+            "NumOfDelete": 82,
+            "Accuracy": 59.7,
+            "DeletingRatio": 0.98
+        }
+    }
+}

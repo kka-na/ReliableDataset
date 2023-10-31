@@ -29,9 +29,9 @@ class MakeCleaningList():
             self.target2 = "b"
         
         self.base_path = "/home/kana/Documents/Dataset/{}".format(self.dataset_name)
-        self.data_train_path = self.base_path+"/cleaning/iter{}/{}/".format(self.iter, self.subset)
-        data1_path = self.base_path+"/cleaning/iter{}/{}/".format(self.iter, self.target1)
-        data2_path = self.base_path+"/cleaning/iter{}/{}/".format(self.iter, self.target2)
+        self.data_train_path = self.base_path+"/deleting/iter{}/{}/".format(self.iter, self.subset)
+        data1_path = self.base_path+"/deleting/iter{}/{}/".format(self.iter, self.target1)
+        data2_path = self.base_path+"/deleting/iter{}/{}/".format(self.iter, self.target2)
         self.data1_val_path = self.data_train_path+"inference_{}/".format(self.target1)
         self.data2_val_path = self.data_train_path+"inference_{}/".format(self.target2)
         self.score_th = self.get_score(data1_path, data2_path)
@@ -59,8 +59,8 @@ class MakeCleaningList():
         self.set_values()
 
         gt_dir = self.base_path+"/data/"
-        inf1_dir = self.base_path+"/cleaning/iter{}/{}/inference_{}/".format(self.iter, self.subset, self.target1)
-        inf2_dir = self.base_path+"/cleaning/iter{}/{}/inference_{}/".format(self.iter, self.subset, self.target2)
+        inf1_dir = self.base_path+"/deleting/iter{}/{}/inference_{}/".format(self.iter, self.subset, self.target1)
+        inf2_dir = self.base_path+"/deleting/iter{}/{}/inference_{}/".format(self.iter, self.subset, self.target2)
         
         cleaning_list = []
         labels_cnt = 0
@@ -105,7 +105,7 @@ class MakeCleaningList():
                     cleaning_cnt += 1
         f.close()
 
-        cleaning_txt = self.data_train_path+"cleaning_list.txt"
+        cleaning_txt = self.data_train_path+"deleting_list.txt"
         f = open(cleaning_txt, 'w')
         f.write("Cleaning Results "+str(labels_cnt)+" -> "+str(cleaning_cnt)+"\n")
         for file_name in cleaning_list:

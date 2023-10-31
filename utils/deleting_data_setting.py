@@ -51,7 +51,7 @@ class DataSetting(QObject):
 
     def init_path(self):
         self.base_path = f"/home/kana/Documents/Dataset/{self.dataset_name}"
-        self.iter_path = f"{self.base_path}/cleaning/iter{self.iter}"
+        self.iter_path = f"{self.base_path}/deleting/iter{self.iter}"
         self.data_path = f"{self.base_path}/data/"
         self.sub_list = ['a','b','c','eval']
         self.type_list = ['train', 'val']
@@ -68,7 +68,7 @@ class DataSetting(QObject):
             else:
                 pass
         
-        check_and_make(f"{self.base_path}/cleaning/")
+        check_and_make(f"{self.base_path}/deleting/")
         check_and_make("./training/")
         check_and_make("./training/configs")
         check_and_make("./training/output")
@@ -84,7 +84,7 @@ class DataSetting(QObject):
             with open(f"{self.iter_path}/data.txt", 'w') as f:
                 f.write('\n'.join(image_paths))
         else:
-            data_cleaned_txt = f"{self.base_path}/cleaning/iter{int(self.iter)-1}/data_deleted.txt"
+            data_cleaned_txt = f"{self.base_path}/deleting/iter{int(self.iter)-1}/data_deleted.txt"
             shutil.copy(data_cleaned_txt, f"{self.iter_path}/data.txt")
 
     

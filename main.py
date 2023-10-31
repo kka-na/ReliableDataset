@@ -302,15 +302,13 @@ class MainWindow(QMainWindow):
     
     @pyqtSlot(str, float)
     def set_score(self, sub, sc):
-        def SC(_sc):
-            return str(round(sc*100,2))
-        self.log_iter[f"{sub}"]["ScoreTh"]=float(SC(sc)) 
+        self.log_iter[f"{sub}"]["ScoreTh"]=float(str(sc)) 
         if sub == 'a':
-            self.ui.label_14.setText(SC(sc))
+            self.ui.label_14.setText(str(sc))
         elif sub == 'b':
-            self.ui.label_24.setText(SC(sc))
+            self.ui.label_24.setText(str(sc))
         elif sub == 'c':
-            self.ui.label_19.setText(SC(sc))
+            self.ui.label_19.setText(str(sc))
     
     @pyqtSlot(str, int)
     def set_deleted(self, sub, deleted):

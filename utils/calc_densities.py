@@ -15,7 +15,7 @@ class CalcDensities(QObject):
 
     def init_path(self):
         self.base_path = f"/home/kana/Documents/Dataset/{self.dataset_name}"
-        self.iter_path = f"{self.base_path}/cleaning/iter{self.iter}"
+        self.iter_path = f"{self.base_path}/deleting/iter{self.iter}"
         self.data_path = f"{self.base_path}/data"
         self.whitening_path = f"{self.base_path}/whitening"
         self.reduct_path = f"{self.whitening_path}/reduct{self.reduct}"
@@ -39,10 +39,11 @@ class CalcDensities(QObject):
         with open (last_data_list, 'r') as f:
             lines = f.readlines()
             self.set_variance_list(lines)
+            width, height = 0, 0
             for line in lines:
                 file_name, deleting_score = line.split(' ')
                 txt_file = f"{self.data_path}/{file_name}.txt"
-                width, height = self.get_image_size(file_name)
+                width, height = self.get_image_size(file_name, width, height)
                 class_density = self.calc_class_densities(txt_file)
                 object_size_density = self.calc_object_size_densities(txt_file, width, height)
                 final_score = 0.5*(float(deleting_score))+0.5*(((0.5*class_density)+(0.5*object_size_density)))
@@ -60,6 +61,8 @@ class CalcDensities(QObject):
         self.send_success.emit()
         self.send_data_num.emit(data_cnt, target_data_cnt)
     
+    send_class_cnt_list = pyqtSignal(object)
+    send_bbox_size_list = pyqtSignal(object)
     def set_variance_list(self, lines):
         #TODO: Get Class Each Noramalized Std Deviation number's list
         class_num = len(self.classes) #Count Factor
@@ -71,26 +74,34 @@ class CalcDensities(QObject):
         all_gt_bbox_size = [ 0 for _ in range(size_num)]
         min_bbox_size = 999999
         max_bbox_size = 0
+        width, height = 0, 0
         for line in lines: 
             txt_file = f"{self.data_path}/{line.split(' ')[0]}.txt"
             all_gt_bbox_count += calc_module.get_bbox_cnt(txt_file)
             calc_module.get_bbox_class_cnt_list(txt_file, all_gt_bbox_class)
-            width, height = self.get_image_size(line.split(' ')[0])
+            width, height = self.get_image_size(line.split(' ')[0],width, height)
             bbox_sizes = calc_module.get_bbox_size(txt_file, width, height)
             for bs in bbox_sizes:
                 if bs < min_bbox_size:
                     min_bbox_size = bs
-                elif bs > max_bbox_size:
+                if bs > max_bbox_size:
                     max_bbox_size = bs
+        self.bbox_size_categories = calc_module.get_bbox_size_categories(min_bbox_size, max_bbox_size, size_num)
         for line in lines: 
             txt_file = f"{self.data_path}/{line.split(' ')[0]}.txt"
-            width, height = self.get_image_size(line.split(' ')[0])
-            calc_module.get_bbox_size_cnt_list(txt_file, all_gt_bbox_size, width, height)
+            width, height = self.get_image_size(line.split(' ')[0], width, height)
+            calc_module.get_bbox_size_cnt_list(txt_file, all_gt_bbox_size, width, height, self.bbox_size_categories)
 
         class_std_var, class_dev_list = calc_module.calc_norm_variance(all_gt_bbox_class, class_num, all_gt_bbox_count)
         self.class_z_scores = calc_module.calc_z_score(class_num, class_std_var, class_dev_list)
         size_std_var, size_dev_list = calc_module.calc_norm_variance(all_gt_bbox_size, size_num, all_gt_bbox_count)
         self.size_z_scores = calc_module.calc_z_score(size_num, size_std_var, size_dev_list)
+        print(all_gt_bbox_class)
+        print(all_gt_bbox_size)
+
+        self.send_class_cnt_list.emit(all_gt_bbox_class)
+        self.send_bbox_size_list.emit(all_gt_bbox_size)
+
 
     def calc_class_densities(self, file):
         density = 0.0
@@ -104,17 +115,21 @@ class CalcDensities(QObject):
 
     def calc_object_size_densities(self, file, width, height):
         density = 0.0
-        size_list = calc_module.get_bbox_size_list(file, width, height)
+        size_list = calc_module.get_bbox_size_list(file, width, height, self.bbox_size_categories)
         for size in size_list:
             density += float(self.size_z_scores[size])
         if len(size_list) > 0:
             density /= float(len(size_list))
         return density
     
-    def get_image_size(self, name):
+    def get_image_size(self, name, w, h):
         img_file = f"{self.data_path}/{name}.jpg"
         if not os.path.exists(img_file):
             img_file = f"{self.data_path}/{name}.png"
         with io.open(img_file, 'rb') as fobj:
-            width, height = get_size(fobj)
+            try:
+                width, height = get_size(fobj)
+            except:
+                width = w
+                height = h
         return width, height
